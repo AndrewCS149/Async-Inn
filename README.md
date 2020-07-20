@@ -47,4 +47,4 @@ Pure Join Table: The LayoutAmenities table has no PK, the unique identifier is t
 
 ### ERD
 
-[ERD](ERD.png)
+![ERD](./ERD.png)
