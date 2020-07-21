@@ -10,8 +10,6 @@ C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.csprojAssemblyReference.cache
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.AssemblyInfoInputs.cache
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.AssemblyInfo.cs
-C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.csproj.CoreCompileInputs.cache
-C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.RazorTargetAssemblyInfo.cache
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\staticwebassets\AsyncInn.StaticWebAssets.Manifest.cache
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\staticwebassets\AsyncInn.StaticWebAssets.xml
