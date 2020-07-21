@@ -16,6 +16,7 @@ namespace AsyncInn.Controllers
     {
         private readonly AsyncInnDbContext _context;
 
+        // our constructor is bringing in a reference to our db
         public HotelsController(AsyncInnDbContext context)
         {
             _context = context;
