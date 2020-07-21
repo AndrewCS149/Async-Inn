@@ -43,6 +43,26 @@ namespace AsyncInn.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Seattle",
+                            Name = "Good Feels Inn",
+                            Phone = "12345678",
+                            State = "WA",
+                            StreetAddress = "12345 Road Street"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Rockford",
+                            Name = "Nice Stay Lounge",
+                            Phone = "12345678",
+                            State = "IL",
+                            StreetAddress = "12345 Road Street"
+                        });
                 });
 #pragma warning restore 612, 618
         }
