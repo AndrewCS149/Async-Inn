@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AsyncInn.Models.Interfaces
 {
-    interface IHotel
+    public interface IHotel
     {
         // contain methods and properties that are required for the classes to implement 
 

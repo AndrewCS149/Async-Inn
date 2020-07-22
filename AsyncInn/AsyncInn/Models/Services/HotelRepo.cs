@@ -19,10 +19,7 @@ namespace AsyncInn.Models.Services
 
         public async Task<Hotel> Create(Hotel hotel)
         {
-            // when I have a hotel, I want to add it to the DB
             _context.Entry(hotel).State = EntityState.Added;
-
-            // hotel gets 'saved' here, and then given an id
             await _context.SaveChangesAsync();
 
             return hotel;
