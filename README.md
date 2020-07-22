@@ -1,50 +1,68 @@
 # Async-Inn
 
-Lab-11
-
-07/20/2020
-
 *Author: Andrew Smith*
+
+- Lab-11
+- Lab-12
 
 ---
 
 ### Description 
 
-Diagram Components:
-
-**Location Table**
-Key(s):  Primary Key
-Description: Each location has a name, city, state, address, phone number, and amount of rooms at the location.
-
-**Layout Table**
-Key(s) - Primary Key, LayoutAmenitiesID(FK)
-Description:
-The Nickname property is an Enum, because it allows us to insert a list of predefined, unique values into the table. Duplicate values in the Enum list will cause an error.  
-The Layout table has a 1:* relationship with the Rooms table, because many rooms in the hotel chain can have the same layout, but each room only has one layout. 
-The Layout table has a 1:* relationship with the Amenities table because each layout can have multiple amenities.
-Navigation Properties - Amenities and Rooms. 
-
-**Rooms Table**
-Key(s): Primary Key, LocationID(FK), LayoutID(FK), PriceID(FK)
-Description: A room is dependent on its location, layout, and price. Each room also has a unique room number at each location, but locations will have repeat room numbers (ex. every hotel has a room 1).
-Joint Entity Table with Payload: The table has additional data (PK and pets property) on top of the composite keys. 
-
-**Amenities Table**
-Key(s): Primary Key
-Description: Amenities are combinatorial meaning that they can be related to another table individually or as a combination. Amenities are tied directly to the layout of a room which makes the layout table’s primary key a necessary part of the rooms table.
-
-**Price Table**
-Key(s): RoomsID(CK), LocationID(CK)
-Description: Pricing is dependent on the location, room number, and layout (which is dependent on the amenities). This means that rooms will never share the same price in the same location, but a coincidental mixture of properties means that two prices could potentially be the same at different locations with other differing properties.
-Pure Join Table: The price table has no PK, the unique identifier is the combination of both Foreign Keys, Room ID and Location ID into Composite Keys. 
-
-**LayoutAmenities Table**
-Key(s): LayoutID(CK), AmenitiesID(CK)
-Description: The relationship between Amenities and Layout is a many to many, requiring a pure join. LayoutID is referencing the primary key from the Layout table, while AmenitiesID is referencing the primary key from the Amenities table.
-Pure Join Table: The LayoutAmenities table has no PK, the unique identifier is the combination of both Foreign Keys, LayoutID and AmenitiesID.
+This is an ASP.NET Core Web Application that simulates a hotel chain. The ERD below displays
+the current state of the database. An API is also integrated amongst the project in an *MVC*
+fashion. Currently, there is only a handful of data residing in the database which was 
+generated from the initial *seed data* in a *code first migration* approach.
 
 ---
 
 ### ERD
 
-![ERD](ERD.png)
+This ERD was taken from the 401 .NET course [repository](https://github.com/codefellows/seattle-dotnet-401d11).
+
+
+![ERD](Assets/ERD.png)
+
+
+**ERD Components:**
+
+**Hotel Table**
+- Keys
+  - ID(PK)
+
+**HotelRoom Table**
+- Keys
+  - HotelID(FK, CK)
+  - RoomNumber(CK)
+  - RoomID(FK)
+
+**Room Table**
+- Keys
+  - ID(PK)
+
+**RoomAmenities Table**
+- Keys
+  - AmenitiesID(FK, CK)
+  - RoomID(FK, CK)
+
+**Amenities Table**
+- Keys
+  - ID(PK)
+
+---
+
+### Languages / Tools
+
+- C#
+- ASP.NET Core
+- EF (entity framework) Core
+
+### Change Log
+
+- 1.4 Add controllers for all models into Controllers folder - 21 Jul 2020
+- 1.3 Add seed data and add to migrations - 21 Jul 2020
+- 1.2 Set up API - 21 Jul 2020
+- 1.1 Hotel, Room and Amenities to Model folder - 21 Jul 2020
+- 1.0 Add ERD into README.MD - 21 Jul 2020
+    
+
