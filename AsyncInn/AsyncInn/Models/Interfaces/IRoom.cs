@@ -7,5 +7,20 @@ namespace AsyncInn.Models.Interfaces
 {
     interface IRoom
     {
+        // create
+        Room Create(Room room);
+
+        // read
+        // get all
+        List<Room> GetAllRooms();
+
+        // get individually (by id)
+        Room GetRoom(int id);
+
+        // update
+        Room Update(int id, Room room);
+
+        // delete
+        void Delete(int id);
     }
 }
