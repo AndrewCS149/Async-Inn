@@ -44,9 +44,11 @@ namespace AsyncInn.Models.Services
             return amenity;
         }
 
-        public Amenities Update(int id, Amenities amenity)
+        public async Task<Amenities> Update(Amenities amenity)
         {
-            throw new NotImplementedException();
+            _context.Entry(amenity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return amenity;
         }
     }
 }

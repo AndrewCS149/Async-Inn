@@ -47,9 +47,11 @@ namespace AsyncInn.Models.Services
             return hotel;
         }
 
-        public Hotel Update(int id, Hotel hotel)
+        public async Task<Hotel> Update(Hotel hotel)
         {
-            throw new NotImplementedException();
+            _context.Entry(hotel).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return hotel;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AsyncInn.Models.Interfaces
         Task<Hotel> GetHotel(int id);
 
         // update
-        Hotel Update(int id, Hotel hotel);
+        Task<Hotel> Update(Hotel hotel);
 
         // delete
         Task Delete(int id);

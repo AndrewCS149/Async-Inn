@@ -45,9 +45,11 @@ namespace AsyncInn.Models.Services
             return room;
         }
 
-        public Room Update(int id, Room room)
+        public async Task<Room> Update(Room room)
         {
-            throw new NotImplementedException();
+            _context.Entry(room).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return room;
         }
     }
 }
