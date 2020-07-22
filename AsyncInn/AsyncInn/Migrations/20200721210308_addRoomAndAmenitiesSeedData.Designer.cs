@@ -3,14 +3,16 @@ using AsyncInn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AsyncInn.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    partial class AsyncInnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200721210308_addRoomAndAmenitiesSeedData")]
+    partial class addRoomAndAmenitiesSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,11 +44,6 @@ namespace AsyncInn.Migrations
                         {
                             Id = 2,
                             Name = "Microwave"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Minibar"
                         });
                 });
 
@@ -82,7 +79,7 @@ namespace AsyncInn.Migrations
                             Id = 1,
                             City = "Seattle",
                             Name = "Good Feels Inn",
-                            Phone = "8675309",
+                            Phone = "12345678",
                             State = "WA",
                             StreetAddress = "12345 Road Street"
                         },
@@ -91,18 +88,9 @@ namespace AsyncInn.Migrations
                             Id = 2,
                             City = "Rockford",
                             Name = "Nice Stay Lounge",
-                            Phone = "8675309",
+                            Phone = "12345678",
                             State = "IL",
-                            StreetAddress = "334 2nd street"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Issaquah",
-                            Name = "Relaxation Paradise",
-                            Phone = "8675309",
-                            State = "WA",
-                            StreetAddress = "61107 Hillbridge Road"
+                            StreetAddress = "12345 Road Street"
                         });
                 });
 
@@ -135,12 +123,6 @@ namespace AsyncInn.Migrations
                             Id = 2,
                             Layout = 1,
                             Name = "Vibrant"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Layout = 0,
-                            Name = "Sooth"
                         });
                 });
 #pragma warning restore 612, 618

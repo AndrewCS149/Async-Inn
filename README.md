@@ -47,4 +47,8 @@ Pure Join Table: The LayoutAmenities table has no PK, the unique identifier is t
 
 ### ERD
 
-![ERD](ERD.png)
+This ERD was taken from the 401 .NET course repository.
+
+[Repo Link](https://github.com/codefellows/seattle-dotnet-401d11)
+
+![ERD](Assets/ERD.png)

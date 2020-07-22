@@ -55,7 +55,7 @@ namespace AsyncInn
                 // set default routing for our request within the API application
                 // by default, our convention is {site}/[controller]/[action]/[id]
                 // id is not required, allowing it to be nullable
-                endpoints.MapControllerRoute("default", "{controller=Home}controller/{action=Index}action/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
