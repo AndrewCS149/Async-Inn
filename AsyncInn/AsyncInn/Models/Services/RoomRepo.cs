@@ -26,14 +26,17 @@ namespace AsyncInn.Models.Services
             return room;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Room room= await GetRoom(id);
+            _context.Entry(room).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
 
-        public List<Room> GetAllRooms()
+        public async Task<List<Room>> GetAllRooms()
         {
-            throw new NotImplementedException();
+            var rooms = await _context.Room.ToListAsync();
+            return rooms;
         }
 
         public async Task<Room> GetRoom(int id)

@@ -14,7 +14,7 @@ namespace AsyncInn.Models.Interfaces
 
         // read
         // get all
-        List<Hotel> GetAllHotels();
+        Task<List<Hotel>> GetAllHotels();
 
         // get individually (by id)
         Task<Hotel> GetHotel(int id);
@@ -23,6 +23,6 @@ namespace AsyncInn.Models.Interfaces
         Hotel Update(int id, Hotel hotel);
 
         // delete
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

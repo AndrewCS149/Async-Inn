@@ -25,14 +25,17 @@ namespace AsyncInn.Models.Services
             return amenity;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Amenities amenity = await GetAmenity(id);
+            _context.Entry(amenity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
 
-        public List<Amenities> GetAllAmenities()
+        public async Task<List<Amenities>> GetAllAmenities()
         {
-            throw new NotImplementedException();
+            var amenities = await _context.Amenities.ToListAsync();
+            return amenities;
         }
 
         public async Task<Amenities> GetAmenity(int id)

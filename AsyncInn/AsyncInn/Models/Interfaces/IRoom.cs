@@ -12,7 +12,7 @@ namespace AsyncInn.Models.Interfaces
 
         // read
         // get all
-        List<Room> GetAllRooms();
+        Task<List<Room>> GetAllRooms();
 
         // get individually (by id)
         Task<Room> GetRoom(int id);
@@ -21,6 +21,6 @@ namespace AsyncInn.Models.Interfaces
         Room Update(int id, Room room);
 
         // delete
-        void Delete(int id);
+        Task Delete(int id);
     }
 }
