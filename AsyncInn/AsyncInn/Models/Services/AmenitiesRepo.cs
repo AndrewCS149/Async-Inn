@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AsyncInn.Models.Services
 {
@@ -16,9 +17,12 @@ namespace AsyncInn.Models.Services
             _context = context;
         }
 
-        public Amenities Create(Amenities amenity)
+        public async Task<Amenities> Create(Amenities amenity)
         {
-            throw new NotImplementedException();
+            _context.Entry(amenity).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+
+            return amenity;
         }
 
         public void Delete(int id)
@@ -31,9 +35,10 @@ namespace AsyncInn.Models.Services
             throw new NotImplementedException();
         }
 
-        public Amenities GetAmenity(int id)
+        public async Task<Amenities> GetAmenity(int id)
         {
-            throw new NotImplementedException();
+            Amenities amenity = await _context.Amenities.FindAsync(id);
+            return amenity;
         }
 
         public Amenities Update(int id, Amenities amenity)

@@ -8,14 +8,14 @@ namespace AsyncInn.Models.Interfaces
     interface IRoom
     {
         // create
-        Room Create(Room room);
+        Task<Room> Create(Room room);
 
         // read
         // get all
         List<Room> GetAllRooms();
 
         // get individually (by id)
-        Room GetRoom(int id);
+        Task<Room> GetRoom(int id);
 
         // update
         Room Update(int id, Room room);

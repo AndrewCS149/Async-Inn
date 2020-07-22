@@ -8,14 +8,14 @@ namespace AsyncInn.Models.Interfaces
     interface IAmenities
     {
         // create
-        Amenities Create(Amenities amenity);
+        Task<Amenities> Create(Amenities amenity);
 
         // read
         // get all
         List<Amenities> GetAllAmenities();
 
         // get individually (by id)
-        Amenities GetAmenity(int id);
+        Task<Amenities> GetAmenity(int id);
 
         // update
         Amenities Update(int id, Amenities amenity);

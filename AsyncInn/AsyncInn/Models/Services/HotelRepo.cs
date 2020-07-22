@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AsyncInn.Models.Services
 {
@@ -16,9 +17,15 @@ namespace AsyncInn.Models.Services
             _context = context;
         }
 
-        public Hotel Create(Hotel hotel)
+        public async Task<Hotel> Create(Hotel hotel)
         {
-            throw new NotImplementedException();
+            // when I have a hotel, I want to add it to the DB
+            _context.Entry(hotel).State = EntityState.Added;
+
+            // hotel gets 'saved' here, and then given an id
+            await _context.SaveChangesAsync();
+
+            return hotel;
         }
 
         public void Delete(int id)
@@ -31,9 +38,10 @@ namespace AsyncInn.Models.Services
             throw new NotImplementedException();
         }
 
-        public Hotel GetHotel(int id)
+        public async Task<Hotel> GetHotel(int id)
         {
-            throw new NotImplementedException();
+            Hotel hotel = await _context.Hotels.FindAsync(id);
+            return hotel;
         }
 
         public Hotel Update(int id, Hotel hotel)
