@@ -30,7 +30,10 @@ namespace AsyncInn
         public void ConfigureServices(IServiceCollection services)
         {
             // enable use controllers within the MVC convention
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
 
             // register with the app, that the database exists and what options to use for it
             services.AddDbContext<AsyncInnDbContext>(options =>

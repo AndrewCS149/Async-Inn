@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace AsyncInn.Controllers
 {
@@ -59,6 +60,23 @@ namespace AsyncInn.Controllers
         {
             await _room.Create(room);
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+        }
+
+        // POST: {roomId}/{amenityId}
+        [HttpPost]
+        [Route("{roomId}/{amenityId}")]
+        public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
+        {
+            await _room.AddRoomAmenity(roomId, amenityId);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{roomId}/{amenityId}")]
+        public async Task<ActionResult> DeleteRoomAmenity(int roomId, int amenityId)
+        {
+            await _room.DeleteRoomAmenity(roomId, amenityId);
+            return Ok();
         }
 
         // DELETE: api/Rooms/5

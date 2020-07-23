@@ -10,5 +10,9 @@ namespace AsyncInn.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Layout { get; set; }
+
+        // nav props
+        public List<RoomAmenities> RoomAmenities { get; set; }
+        //public HotelRoom HotelRoom { get; set; }
     }
 }
