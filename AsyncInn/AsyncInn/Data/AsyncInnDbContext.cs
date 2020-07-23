@@ -1,5 +1,6 @@
 ﻿using AsyncInn.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace AsyncInn.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Room { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
+        public DbSet<RoomAmenities> RoomAmenity { get; set; }
 
         public AsyncInnDbContext(DbContextOptions<AsyncInnDbContext> options) : base(options)
         {
@@ -21,6 +23,9 @@ namespace AsyncInn.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuiler)
         {
+            modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId});
+
+
             modelBuiler.Entity<Hotel>().HasData(
                 new Hotel
                 {
