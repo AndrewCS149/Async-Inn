@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AsyncInn.Data;
+using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +40,11 @@ namespace AsyncInn
                 // Connection string contains the location, username, pw of your sql server... with our sql db directly.
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            // register my dependency injection services
+            services.AddTransient<IHotel, HotelRepo>();
+            services.AddTransient<IRoom, RoomRepo>();
+            services.AddTransient<IAmenities, AmenitiesRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

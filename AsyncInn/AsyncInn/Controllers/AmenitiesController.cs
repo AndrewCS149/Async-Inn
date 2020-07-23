@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
+using AsyncInn.Models.Interfaces;
 
 namespace AsyncInn.Controllers
 {
@@ -14,32 +15,25 @@ namespace AsyncInn.Controllers
     [ApiController]
     public class AmenitiesController : ControllerBase
     {
-        private readonly AsyncInnDbContext _context;
+        private readonly IAmenities _amenity;
 
-        public AmenitiesController(AsyncInnDbContext context)
+        public AmenitiesController(IAmenities amenity)
         {
-            _context = context;
+            _amenity = amenity;
         }
 
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenities>>> GetAmenities()
+        public async Task<ActionResult<IEnumerable<Amenities>>> GetAllAmenities()
         {
-            return await _context.Amenities.ToListAsync();
+            return await _amenity.GetAllAmenities();
         }
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Amenities>> GetAmenities(int id)
+        public async Task<ActionResult<Amenities>> GetAmenity(int id)
         {
-            var amenities = await _context.Amenities.FindAsync(id);
-
-            if (amenities == null)
-            {
-                return NotFound();
-            }
-
-            return amenities;
+            return await _amenity.GetAmenity(id);
         }
 
         // PUT: api/Amenities/5
@@ -52,26 +46,8 @@ namespace AsyncInn.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(amenities).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AmenitiesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedAmenity = await _amenity.Update(amenities);
+            return Ok(updatedAmenity);
         }
 
         // POST: api/Amenities
@@ -80,9 +56,7 @@ namespace AsyncInn.Controllers
         [HttpPost]
         public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
         {
-            _context.Amenities.Add(amenities);
-            await _context.SaveChangesAsync();
-
+            await _amenity.Create(amenities);
             return CreatedAtAction("GetAmenities", new { id = amenities.Id }, amenities);
         }
 
@@ -90,21 +64,9 @@ namespace AsyncInn.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
         {
-            var amenities = await _context.Amenities.FindAsync(id);
-            if (amenities == null)
-            {
-                return NotFound();
-            }
-
-            _context.Amenities.Remove(amenities);
-            await _context.SaveChangesAsync();
-
-            return amenities;
+            await _amenity.Delete(id);
+            return NoContent();
         }
 
-        private bool AmenitiesExists(int id)
-        {
-            return _context.Amenities.Any(e => e.Id == id);
-        }
     }
 }
