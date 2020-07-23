@@ -11,7 +11,7 @@ namespace AsyncInn.Models
         public int RoomId { get; set; }
 
         // navigation properties
-        public Room room { get; set; }
+        public Room Room { get; set; }
         public Amenities Amenity { get; set; }
     }
 }

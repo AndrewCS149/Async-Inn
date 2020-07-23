@@ -15,6 +15,7 @@ namespace AsyncInn.Data
         public DbSet<Room> Room { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
         public DbSet<RoomAmenities> RoomAmenity { get; set; }
+        //public DbSet<HotelRoom> HotelRoom { get; set; }
 
         public AsyncInnDbContext(DbContextOptions<AsyncInnDbContext> options) : base(options)
         {
@@ -23,6 +24,8 @@ namespace AsyncInn.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuiler)
         {
+            modelBuiler.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
+
             modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId});
 
 
@@ -93,5 +96,7 @@ namespace AsyncInn.Data
                 }
             );
         }
+
+        public DbSet<AsyncInn.Models.HotelRoom> HotelRoom { get; set; }
     }
 }

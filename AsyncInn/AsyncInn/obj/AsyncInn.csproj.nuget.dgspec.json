@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\andre\\Desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj": {}
+    "C:\\Users\\andre\\desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj": {}
   },
   "projects": {
-    "C:\\Users\\andre\\Desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj": {
+    "C:\\Users\\andre\\desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\andre\\Desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj",
+        "projectUniqueName": "C:\\Users\\andre\\desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj",
         "projectName": "AsyncInn",
-        "projectPath": "C:\\Users\\andre\\Desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj",
+        "projectPath": "C:\\Users\\andre\\desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\AsyncInn.csproj",
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\andre\\Desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\obj\\",
+        "outputPath": "C:\\Users\\andre\\desktop\\code\\codeFellows\\code401\\labs\\Async-Inn\\AsyncInn\\AsyncInn\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -42,6 +42,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.6, )"
@@ -63,6 +67,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.3, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [

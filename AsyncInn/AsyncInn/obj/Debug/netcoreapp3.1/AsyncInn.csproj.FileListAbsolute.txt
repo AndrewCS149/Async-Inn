@@ -7,6 +7,8 @@ C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\AsyncInn.runtimeconfig.dev.json
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\AsyncInn.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\AsyncInn.pdb
+C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
@@ -46,6 +48,7 @@ C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\SQLitePCLRaw.batteries_v2.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\bin\Debug\netcoreapp3.1\SQLitePCLRaw.nativelibrary.dll
@@ -145,3 +148,4 @@ C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.dll
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.pdb
 C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.genruntimeconfig.cache
+C:\Users\andre\Desktop\code\codeFellows\code401\labs\Async-Inn\AsyncInn\AsyncInn\obj\Debug\netcoreapp3.1\AsyncInn.csprojAssemblyReference.cache
