@@ -16,7 +16,7 @@ namespace AsyncInn.Models.Services
         /// <summary>
         /// Constructor for RoomRepo
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Database context<</param>
         public RoomRepo(AsyncInnDbContext context)
         {
             _context = context;

@@ -12,6 +12,10 @@ namespace AsyncInn.Models.Services
     {
         private AsyncInnDbContext _context;
 
+        /// <summary>
+        /// Constructor for AmenitiesRepo
+        /// </summary>
+        /// <param name="context">Database context</param>
         public AmenitiesRepo(AsyncInnDbContext context)
         {
             _context = context;

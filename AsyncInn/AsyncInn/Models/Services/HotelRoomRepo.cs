@@ -1,4 +1,5 @@
-﻿using AsyncInn.Models.Interfaces;
+﻿using AsyncInn.Data;
+using AsyncInn.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,17 @@ namespace AsyncInn.Models.Services
 {
     public class HotelRoomRepo : IHotelRoom
     {
+        private AsyncInnDbContext _context;
+
+        /// <summary>
+        /// Constructor for HotelRoomRepo
+        /// </summary>
+        /// <param name="context">Database context</param>
+        public HotelRoomRepo(AsyncInnDbContext context)
+        {
+            _context = context;
+        }
+
         /// <summary>
         /// Creates a hotel room
         /// </summary>

@@ -12,6 +12,10 @@ namespace AsyncInn.Models.Services
     {
         private AsyncInnDbContext _context;
 
+        /// <summary>
+        /// Constructor for HotelRepo
+        /// </summary>
+        /// <param name="context">Database context</param>
         public HotelRepo(AsyncInnDbContext context)
         {
             _context = context;
