@@ -13,11 +13,20 @@ namespace AsyncInn.Models.Services
     {
         private AsyncInnDbContext _context;
 
+        /// <summary>
+        /// Constructor for RoomRepo
+        /// </summary>
+        /// <param name="context"></param>
         public RoomRepo(AsyncInnDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Creates a room
+        /// </summary>
+        /// <param name="room">The room to create</param>
+        /// <returns>Task of completion</returns>
         public async Task<Room> Create(Room room)
         {
             _context.Entry(room).State = EntityState.Added;
@@ -26,6 +35,11 @@ namespace AsyncInn.Models.Services
             return room;
         }
 
+        /// <summary>
+        /// Deletes a specified room
+        /// </summary>
+        /// <param name="id">Unique identifier of room</param>
+        /// <returns>Task of completion/returns>
         public async Task Delete(int id)
         {
             Room room= await GetRoom(id);
@@ -33,12 +47,21 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Returns all rooms
+        /// </summary>
+        /// <returns>Task of completion</returns>
         public async Task<List<Room>> GetAllRooms()
         {
             var rooms = await _context.Room.ToListAsync();
             return rooms;
         }
 
+        /// <summary>
+        /// Returns a specified room
+        /// </summary>
+        /// <param name="id">Unique identifier of room</param>
+        /// <returns>Task of completion</returns>
         public async Task<Room> GetRoom(int id)
         {
             Room room = await _context.Room.FindAsync(id);
@@ -52,6 +75,11 @@ namespace AsyncInn.Models.Services
             return room;
         }
 
+        /// <summary>
+        /// Updates a room
+        /// </summary>
+        /// <param name="room">The room to update</param>
+        /// <returns>Task of completion</returns>
         public async Task<Room> Update(Room room)
         {
             _context.Entry(room).State = EntityState.Modified;
@@ -59,7 +87,12 @@ namespace AsyncInn.Models.Services
             return room;
         }
 
-        // add room and amenities together
+        /// <summary>
+        /// Adds an amenity and room together
+        /// </summary>
+        /// <param name="roomId">Unique identifier of room</param>
+        /// <param name="amenityId">Unique identifier of amenity</param>
+        /// <returns>Task of completion</returns>
         public async Task AddAmenityToRoom(int roomId, int amenityId)
         {
             RoomAmenities roomAmenity = new RoomAmenities()
