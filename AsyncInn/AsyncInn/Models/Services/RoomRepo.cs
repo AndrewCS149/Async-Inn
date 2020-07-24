@@ -44,11 +44,11 @@ namespace AsyncInn.Models.Services
             Room room = await _context.Room.FindAsync(id);
 
             // include all of the amenities that the room has
-            var amenities = await _context.RoomAmenity.Where(x => x.RoomId == id)
+            var amenity = await _context.RoomAmenity.Where(x => x.RoomId == id)
                 .Include(x => x.Amenity)
                 .ToListAsync();
 
-            room.RoomAmenities = amenities;
+            room.RoomAmenities = amenity;
             return room;
         }
 
@@ -60,7 +60,7 @@ namespace AsyncInn.Models.Services
         }
 
         // add room and amenities together
-        public async Task AddRoomAmenity(int roomId, int amenityId)
+        public async Task AddAmenityToRoom(int roomId, int amenityId)
         {
             RoomAmenities roomAmenity = new RoomAmenities()
             {
@@ -77,7 +77,7 @@ namespace AsyncInn.Models.Services
         /// <param name="roomId">Unique identifier of room</param>
         /// <param name="amenityId">Unique identifier of amenity</param>
         /// <returns>Task of completion</returns>
-        public async Task DeleteRoomAmenity(int roomId, int amenityId)
+        public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
         {
             var result = await _context.RoomAmenity.FirstOrDefaultAsync(x => x.RoomId == roomId && x.AmenitiesId == amenityId);
             _context.Entry(result).State = EntityState.Deleted;

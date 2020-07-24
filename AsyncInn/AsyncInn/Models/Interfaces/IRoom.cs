@@ -23,7 +23,7 @@ namespace AsyncInn.Models.Interfaces
         // delete
         Task Delete(int id);
 
-        Task AddRoomAmenity(int roomId, int amenityId);
+        Task AddAmenityToRoom(int roomId, int amenityId);
 
         /// <summary>
         /// Removes a specified amenity from a specific room
@@ -31,6 +31,6 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="roomId">Unique identifier of room</param>
         /// <param name="amenityId">Unique identifier of amenity</param>
         /// <returns>Task of completion</returns>
-        Task DeleteRoomAmenity(int roomId, int amenityId);
+        Task RemoveAmenityFromRoom(int roomId, int amenityId);
     }
 }

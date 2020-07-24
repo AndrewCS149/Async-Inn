@@ -42,10 +42,10 @@ namespace AsyncInn.Models.Services
         {
             Amenities amenity = await _context.Amenities.FindAsync(id);
             var roomAmenities = await _context.RoomAmenity.Where(x => x.AmenitiesId == id)
-                                                    .Include(x => x.Room)
-                                                    .ToListAsync();
+                .Include(x => x.Room)
+                .ToListAsync();
 
-            amenity.RoomAmenity = roomAmenities;
+            amenity.RoomAmenities = roomAmenities;
             return amenity;
         }
 
