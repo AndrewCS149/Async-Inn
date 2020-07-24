@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AsyncInn.Models.Services
 {
@@ -25,18 +26,22 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to create</param>
         /// <returns>Task of completion</returns>
-        public Task<HotelRoom> Create(HotelRoom hotelRoom)
+        public async Task<HotelRoom> Create(HotelRoom hotelRoom)
         {
-            throw new NotImplementedException();
+            _context.Entry(hotelRoom).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+
+            return hotelRoom;
         }
 
         /// <summary>
         /// Returns all hotel rooms
         /// </summary>
         /// <returns>Task of completion</returns>
-        public Task<List<HotelRoom>> GetAllHotelRooms()
+        public async Task<List<HotelRoom>> GetAllHotelRooms()
         {
-            throw new NotImplementedException();
+            var hotelRooms = await _context.HotelRoom.ToListAsync();
+            return hotelRooms;
         }
 
         /// <summary>
@@ -44,9 +49,10 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of hotel room</param>
         /// <returns>Task of completion</returns>
-        public Task<HotelRoom> GetHotelRoom(int id)
+        public async Task<HotelRoom> GetHotelRoom(int id)
         {
-            throw new NotImplementedException();
+            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(id);
+            return hotelRoom;
         }
 
         /// <summary>
