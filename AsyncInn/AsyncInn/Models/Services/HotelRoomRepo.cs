@@ -8,39 +8,76 @@ namespace AsyncInn.Models.Services
 {
     public class HotelRoomRepo : IHotelRoom
     {
-        public Task AddRoomToHotel(int roomId, int hotelId)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Creates a hotel room
+        /// </summary>
+        /// <param name="hotelRoom">The hotel room to create</param>
+        /// <returns>Task of completion</returns>
         public Task<HotelRoom> Create(HotelRoom hotelRoom)
         {
             throw new NotImplementedException();
         }
 
-        public Task Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Returns all hotel rooms
+        /// </summary>
+        /// <returns>Task of completion</returns>
         public Task<List<HotelRoom>> GetAllHotelRooms()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns a specified hotel room
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel room</param>
+        /// <returns>Task of completion</returns>
         public Task<HotelRoom> GetHotelRoom(int id)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Updates a hotel room
+        /// </summary>
+        /// <param name="hotelRoom">The hotel room to update</param>
+        /// <returns>Task of completion</returns>
+        public Task<HotelRoom> Update(HotelRoom hotelRoom)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Adds a room to a hotel
+        /// </summary>
+        /// <param name="roomId">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
+        /// <returns>Task of completion</returns>
+        public Task AddRoomToHotel(int roomId, int hotelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Deletes a specified hotel room
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel room</param>
+        /// <returns>Task of completion</returns>
+        public Task Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Removes a room from a hotel
+        /// </summary>
+        /// <param name="roomId">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
+        /// <returns>Task of completion</returns>
         public Task RemoveRoomFromHotel(int roomId, int hotelId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<HotelRoom> Update(HotelRoom hotelRoom)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

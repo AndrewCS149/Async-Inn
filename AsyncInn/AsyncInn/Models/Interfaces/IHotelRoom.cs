@@ -35,19 +35,19 @@ namespace AsyncInn.Models.Interfaces
         Task<HotelRoom> Update(HotelRoom hotelRoom);
 
         /// <summary>
-        /// Deletes a specified hotel room
-        /// </summary>
-        /// <param name="id">Unique identifier of hotel room</param>
-        /// <returns>Task of completion</returns>
-        Task Delete(int id);
-
-        /// <summary>
         /// Adds a room to a hotel
         /// </summary>
         /// <param name="roomId">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
         Task AddRoomToHotel(int roomId, int hotelId);
+
+        /// <summary>
+        /// Deletes a specified hotel room
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel room</param>
+        /// <returns>Task of completion</returns>
+        Task Delete(int id);
 
         /// <summary>
         /// Removes a room from a hotel
