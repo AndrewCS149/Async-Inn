@@ -60,9 +60,11 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to update</param>
         /// <returns>Task of completion</returns>
-        public Task<HotelRoom> Update(HotelRoom hotelRoom)
+        public async Task<HotelRoom> Update(HotelRoom hotelRoom)
         {
-            throw new NotImplementedException();
+            _context.Entry(hotelRoom).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return hotelRoom;
         }
 
         /// <summary>
@@ -71,9 +73,15 @@ namespace AsyncInn.Models.Services
         /// <param name="roomId">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public Task AddRoomToHotel(int roomId, int hotelId)
+        public async Task AddRoomToHotel(int roomId, int hotelId)
         {
-            throw new NotImplementedException();
+            HotelRoom hotelRoom = new HotelRoom()
+            {
+                RoomId = roomId,
+                HotelId = hotelId
+            };
+            _context.Entry(hotelRoom).State = EntityState.Added;
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -81,9 +89,11 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of hotel room</param>
         /// <returns>Task of completion</returns>
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            HotelRoom hotelRoom = await GetHotelRoom(id);
+            _context.Entry(hotelRoom).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -92,9 +102,10 @@ namespace AsyncInn.Models.Services
         /// <param name="roomId">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public Task RemoveRoomFromHotel(int roomId, int hotelId)
+        public async Task RemoveRoomFromHotel(int roomId, int hotelId)
         {
-            throw new NotImplementedException();
+            var result = await _context.HotelRoom.FirstOrDefaultAsync(x => x.HotelId == hotelId && x.RoomId == roomId);
+            await _context.SaveChangesAsync();
         }
 
     }
