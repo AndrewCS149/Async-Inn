@@ -7,20 +7,38 @@ namespace AsyncInn.Models.Interfaces
 {
     public interface IAmenities
     {
-        // create
+        /// <summary>
+        /// Creates an amenity
+        /// </summary>
+        /// <param name="amenity">The amenity to create</param>
+        /// <returns>Task of completion</returns>
         Task<Amenities> Create(Amenities amenity);
 
-        // read
-        // get all
+        /// <summary>
+        /// Returns all amenities
+        /// </summary>
+        /// <returns>Task of completion</returns>
         Task<List<Amenities>> GetAllAmenities();
 
-        // get individually (by id)
+        /// <summary>
+        /// Returns a specified amenity
+        /// </summary>
+        /// <param name="id">Unique identifier of amenity</param>
+        /// <returns>Task of completion</returns>
         Task<Amenities> GetAmenity(int id);
 
-        // update
+        /// <summary>
+        /// Updates an amenity
+        /// </summary>
+        /// <param name="amenity">The amenity to update</param>
+        /// <returns>Task of completion</returns>
         Task<Amenities> Update(Amenities amenity);
 
-        // delete
+        /// <summary>
+        /// Deletes an amenity
+        /// </summary>
+        /// <param name="id">Unique identifier of amenity</param>
+        /// <returns>Task of completion</returns>
         Task Delete(int id);
     }
 }
