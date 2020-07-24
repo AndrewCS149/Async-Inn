@@ -74,6 +74,9 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ### Change Log
 
+- 1.10 Add IHotelRoom interface - 23 Jul 2020
+- 1.9 Add HotelRoom repo file - 23 Jul 2020
+- 1.8 Add RoomAmenities & HotelRoom models - 23 Jul 2020
 - 1.7 Add dependency injection services for all file repositories - 22 Jul 2020
 - 1.6 Add file repositories for all models - 22 Jul 2020
 - 1.5 Add Interfaces for all models - 22 Jul 2020

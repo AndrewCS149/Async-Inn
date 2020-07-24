@@ -11,6 +11,6 @@ namespace AsyncInn.Models
         public string Name { get; set; }
 
         // nav prop
-        public List<RoomAmenities> RoomAmenity { get; set; }
+        public List<RoomAmenities> RoomAmenities { get; set; }
     }
 }

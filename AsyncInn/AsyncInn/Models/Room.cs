@@ -13,6 +13,5 @@ namespace AsyncInn.Models
 
         // nav props
         public List<RoomAmenities> RoomAmenities { get; set; }
-        //public HotelRoom HotelRoom { get; set; }
     }
 }

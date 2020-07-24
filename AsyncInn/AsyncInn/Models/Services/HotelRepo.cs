@@ -12,11 +12,20 @@ namespace AsyncInn.Models.Services
     {
         private AsyncInnDbContext _context;
 
+        /// <summary>
+        /// Constructor for HotelRepo
+        /// </summary>
+        /// <param name="context">Database context</param>
         public HotelRepo(AsyncInnDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Creates a hotel
+        /// </summary>
+        /// <param name="hotel">The hotel to create</param>
+        /// <returns>Task of completion</returns>
         public async Task<Hotel> Create(Hotel hotel)
         {
             _context.Entry(hotel).State = EntityState.Added;
@@ -25,30 +34,49 @@ namespace AsyncInn.Models.Services
             return hotel;
         }
 
-        public async Task Delete(int id)
-        {
-            Hotel hotel = await GetHotel(id);
-            _context.Entry(hotel).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
-        }
-
+        /// <summary>
+        /// Returns all hotels
+        /// </summary>
+        /// <returns>Task of completion</returns>
         public async Task<List<Hotel>> GetAllHotels()
         {
             var hotels = await _context.Hotels.ToListAsync();
             return hotels;
         }
 
+        /// <summary>
+        /// Returns a specified hotel
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel</param>
+        /// <returns>Task of completion</returns>
         public async Task<Hotel> GetHotel(int id)
         {
             Hotel hotel = await _context.Hotels.FindAsync(id);
             return hotel;
         }
 
+        /// <summary>
+        /// Updates a hotel
+        /// </summary>
+        /// <param name="hotel">The hotel to update</param>
+        /// <returns>Task of completion</returns>
         public async Task<Hotel> Update(Hotel hotel)
         {
             _context.Entry(hotel).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return hotel;
+        }
+
+        /// <summary>
+        /// Deletes a hotel
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel</param>
+        /// <returns>Task of completion</returns>
+        public async Task Delete(int id)
+        {
+            Hotel hotel = await GetHotel(id);
+            _context.Entry(hotel).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
     }
 }

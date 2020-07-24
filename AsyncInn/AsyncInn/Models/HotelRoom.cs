@@ -14,7 +14,7 @@ namespace AsyncInn.Models
         public bool PetFriendly { get; set; }
 
         // nav props
-        public Room Room { get; set; }
+        public List<Room> Room { get; set; }
         public Hotel Hotel { get; set; }
     }
 }

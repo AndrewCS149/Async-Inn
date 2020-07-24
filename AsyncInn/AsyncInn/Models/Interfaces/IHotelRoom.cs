@@ -7,15 +7,54 @@ namespace AsyncInn.Models.Interfaces
 {
     interface IHotelRoom
     {
-        // create hotel room
-        
-        // get all hotel rooms
+        /// <summary>
+        /// Creates a hotel room
+        /// </summary>
+        /// <param name="hotelRoom">The hotel room to create</param>
+        /// <returns>Task of completion</returns>
+        Task<HotelRoom> Create(HotelRoom hotelRoom);
 
-        // get a single hotel room
+        /// <summary>
+        /// Returns all hotel rooms
+        /// </summary>
+        /// <returns>Task of completion</returns>
+        Task<List<HotelRoom>> GetAllHotelRooms();
 
-        // update a hotel room
+        /// <summary>
+        /// Returns a specified hotel room
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel room</param>
+        /// <returns>Task of completion</returns>
+        Task<HotelRoom> GetHotelRoom(int id);
 
-        // delete a hotel room
-        //Task Delete(int Room)
+        /// <summary>
+        /// Updates a hotel room
+        /// </summary>
+        /// <param name="hotelRoom">The hotel room to update</param>
+        /// <returns>Task of completion</returns>
+        Task<HotelRoom> Update(HotelRoom hotelRoom);
+
+        /// <summary>
+        /// Adds a room to a hotel
+        /// </summary>
+        /// <param name="roomId">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
+        /// <returns>Task of completion</returns>
+        Task AddRoomToHotel(int roomId, int hotelId);
+
+        /// <summary>
+        /// Deletes a specified hotel room
+        /// </summary>
+        /// <param name="id">Unique identifier of hotel room</param>
+        /// <returns>Task of completion</returns>
+        Task Delete(int id);
+
+        /// <summary>
+        /// Removes a room from a hotel
+        /// </summary>
+        /// <param name="roomId">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
+        /// <returns>Task of completion</returns>
+        Task RemoveRoomFromHotel(int roomId, int hotelId);
     }
 }

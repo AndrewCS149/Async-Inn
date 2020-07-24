@@ -1,4 +1,5 @@
 ﻿using AsyncInn.Models;
+using Microsoft.CodeAnalysis.Emit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -15,7 +16,7 @@ namespace AsyncInn.Data
         public DbSet<Room> Room { get; set; }
         public DbSet<Amenities> Amenities { get; set; }
         public DbSet<RoomAmenities> RoomAmenity { get; set; }
-        //public DbSet<HotelRoom> HotelRoom { get; set; }
+        public DbSet<HotelRoom> HotelRoom { get; set; }
 
         public AsyncInnDbContext(DbContextOptions<AsyncInnDbContext> options) : base(options)
         {
@@ -28,7 +29,20 @@ namespace AsyncInn.Data
 
             modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId});
 
+            // seed hotelRoom data
+            modelBuiler.Entity<HotelRoom>().HasData(
+                new HotelRoom
+                {
+                    HotelId = 1,
+                    RoomId = 1,
+                    RoomNumber = 1,
+                    Rate = 75.00M,
+                    PetFriendly = true
+                }
 
+            );
+
+            // seed hotel data
             modelBuiler.Entity<Hotel>().HasData(
                 new Hotel
                 {
@@ -58,6 +72,8 @@ namespace AsyncInn.Data
                     Phone = "8675309"
                 }
             );
+
+            // seed room data
             modelBuiler.Entity<Room>().HasData(
                 new Room
                 {
@@ -78,6 +94,8 @@ namespace AsyncInn.Data
                     Layout = 0
                 }
             );
+
+            // seed amenities data
             modelBuiler.Entity<Amenities>().HasData(
                 new Amenities
                 {
@@ -95,8 +113,8 @@ namespace AsyncInn.Data
                     Name = "Minibar"
                 }
             );
-        }
 
-        public DbSet<AsyncInn.Models.HotelRoom> HotelRoom { get; set; }
+
+        }
     }
 }

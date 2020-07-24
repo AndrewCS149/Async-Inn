@@ -7,23 +7,47 @@ namespace AsyncInn.Models.Interfaces
 {
     public interface IRoom
     {
-        // create
+        /// <summary>
+        /// Creates a room
+        /// </summary>
+        /// <param name="room">The room to create</param>
+        /// <returns>Task of completion</returns>
         Task<Room> Create(Room room);
 
-        // read
-        // get all
+        /// <summary>
+        /// Returns all rooms
+        /// </summary>
+        /// <returns>Task of completion</returns>
         Task<List<Room>> GetAllRooms();
 
-        // get individually (by id)
+        /// <summary>
+        /// Returns a specified room
+        /// </summary>
+        /// <param name="id">Unique identifier of room</param>
+        /// <returns>Task of completion</returns>
         Task<Room> GetRoom(int id);
 
-        // update
+        /// <summary>
+        /// Updates a room
+        /// </summary>
+        /// <param name="room">The room to update</param>
+        /// <returns>Task of completion</returns>
         Task<Room> Update(Room room);
 
-        // delete
+        /// <summary>
+        /// Deletes a specified room
+        /// </summary>
+        /// <param name="id">Unique identifier of room</param>
+        /// <returns>Task of completion/returns>
         Task Delete(int id);
 
-        Task AddRoomAmenity(int roomId, int amenityId);
+        /// <summary>
+        /// Adds an amenity to a room
+        /// </summary>
+        /// <param name="roomId">Unique identifier of room</param>
+        /// <param name="amenityId">Unique identifier of amenity</param>
+        /// <returns>Task of completion</returns>
+        Task AddAmenityToRoom(int roomId, int amenityId);
 
         /// <summary>
         /// Removes a specified amenity from a specific room
@@ -31,6 +55,6 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="roomId">Unique identifier of room</param>
         /// <param name="amenityId">Unique identifier of amenity</param>
         /// <returns>Task of completion</returns>
-        Task DeleteRoomAmenity(int roomId, int amenityId);
+        Task RemoveAmenityFromRoom(int roomId, int amenityId);
     }
 }

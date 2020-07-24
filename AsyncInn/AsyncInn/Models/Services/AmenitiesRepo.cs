@@ -12,11 +12,20 @@ namespace AsyncInn.Models.Services
     {
         private AsyncInnDbContext _context;
 
+        /// <summary>
+        /// Constructor for AmenitiesRepo
+        /// </summary>
+        /// <param name="context">Database context</param>
         public AmenitiesRepo(AsyncInnDbContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Creates an amenity
+        /// </summary>
+        /// <param name="amenity">The amenity to create</param>
+        /// <returns>Task of completion</returns>
         public async Task<Amenities> Create(Amenities amenity)
         {
             _context.Entry(amenity).State = EntityState.Added;
@@ -25,35 +34,54 @@ namespace AsyncInn.Models.Services
             return amenity;
         }
 
-        public async Task Delete(int id)
-        {
-            Amenities amenity = await GetAmenity(id);
-            _context.Entry(amenity).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
-        }
-
+        /// <summary>
+        /// Returns all amenities
+        /// </summary>
+        /// <returns>Task of completion</returns>
         public async Task<List<Amenities>> GetAllAmenities()
         {
             var amenities = await _context.Amenities.ToListAsync();
             return amenities;
         }
 
+        /// <summary>
+        /// Returns a specified amenity
+        /// </summary>
+        /// <param name="id">Unique identifier of amenity</param>
+        /// <returns>Task of completion</returns>
         public async Task<Amenities> GetAmenity(int id)
         {
             Amenities amenity = await _context.Amenities.FindAsync(id);
             var roomAmenities = await _context.RoomAmenity.Where(x => x.AmenitiesId == id)
-                                                    .Include(x => x.Room)
-                                                    .ToListAsync();
+                .Include(x => x.Room)
+                .ToListAsync();
 
-            amenity.RoomAmenity = roomAmenities;
+            amenity.RoomAmenities = roomAmenities;
             return amenity;
         }
 
+        /// <summary>
+        /// Updates an amenity
+        /// </summary>
+        /// <param name="amenity">The amenity to update</param>
+        /// <returns>Task of completion</returns>
         public async Task<Amenities> Update(Amenities amenity)
         {
             _context.Entry(amenity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return amenity;
+        }
+
+        /// <summary>
+        /// Deletes an amenity
+        /// </summary>
+        /// <param name="id">Unique identifier of amenity</param>
+        /// <returns>Task of completion</returns>
+        public async Task Delete(int id)
+        {
+            Amenities amenity = await GetAmenity(id);
+            _context.Entry(amenity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
     }
 }
