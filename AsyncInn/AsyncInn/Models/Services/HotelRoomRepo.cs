@@ -49,9 +49,9 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of hotel room</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoom> GetHotelRoom(int id)
+        public async Task<HotelRoom> GetHotelRoom(int roomId, int hotelId)
         {
-            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(id);
+            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomId, hotelId);
             return hotelRoom;
         }
 
@@ -89,9 +89,9 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of hotel room</param>
         /// <returns>Task of completion</returns>
-        public async Task Delete(int id)
+        public async Task Delete(int roomId, int hotelId)
         {
-            HotelRoom hotelRoom = await GetHotelRoom(id);
+            HotelRoom hotelRoom = await GetHotelRoom(roomId, hotelId);
             _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

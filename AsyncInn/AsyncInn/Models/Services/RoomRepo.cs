@@ -53,7 +53,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<List<Room>> GetAllRooms()
         {
-            var rooms = await _context.Room.ToListAsync();
+            var rooms = await _context.Room.Include(x => x.RoomAmenities).ThenInclude(x => x.Amenity).ToListAsync();
             return rooms;
         }
 

@@ -7,39 +7,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
+using AsyncInn.Models.Interfaces;
 
 namespace AsyncInn.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/{Hotels}")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
-        private readonly AsyncInnDbContext _context;
+        private readonly IHotelRoom _hotelRoom;
 
-        public HotelRoomsController(AsyncInnDbContext context)
+        public HotelRoomsController(IHotelRoom hotelRoom)
         {
-            _context = context;
+            _hotelRoom = hotelRoom;
         }
 
         // GET: api/HotelRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRoom()
+        [Route("Rooms")]
+        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetAllHotelRooms()
         {
-            return await _context.HotelRoom.ToListAsync();
+            return await _hotelRoom.GetAllHotelRooms();
         }
 
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int id)
+        [Route("{hotelId}/Rooms/{roomId}")]
+        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomId, int hotelId)
         {
-            var hotelRoom = await _context.HotelRoom.FindAsync(id);
-
-            if (hotelRoom == null)
-            {
-                return NotFound();
-            }
-
-            return hotelRoom;
+            return await _hotelRoom.GetHotelRoom(roomId, hotelId);
         }
 
         // PUT: api/HotelRooms/5
@@ -53,72 +49,26 @@ namespace AsyncInn.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(hotelRoom).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelRoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedHotelRoom = await _hotelRoom.Update(hotelRoom);
+            return Ok(updatedHotelRoom);
         }
 
         // POST: api/HotelRooms
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int roomId, int hotelId)
         {
-            _context.HotelRoom.Add(hotelRoom);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (HotelRoomExists(hotelRoom.HotelId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelId }, hotelRoom);
+            await _hotelRoom.AddRoomToHotel(roomId, hotelId);
+            return Ok();
         }
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int id)
+        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomId, int hotelId)
         {
-            var hotelRoom = await _context.HotelRoom.FindAsync(id);
-            if (hotelRoom == null)
-            {
-                return NotFound();
-            }
-
-            _context.HotelRoom.Remove(hotelRoom);
-            await _context.SaveChangesAsync();
-
-            return hotelRoom;
-        }
-
-        private bool HotelRoomExists(int id)
-        {
-            return _context.HotelRoom.Any(e => e.HotelId == id);
+            await _hotelRoom.RemoveRoomFromHotel(roomId, hotelId);
+            return Ok();
         }
     }
 }
