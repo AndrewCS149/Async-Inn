@@ -22,7 +22,7 @@ namespace AsyncInn.Controllers
             _hotelRoom = hotelRoom;
         }
 
-        // GET: api/HotelRooms
+        // GET: api/Hotels/Rooms
         [HttpGet]
         [Route("Rooms")]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetAllHotelRooms()
@@ -30,12 +30,21 @@ namespace AsyncInn.Controllers
             return await _hotelRoom.GetAllHotelRooms();
         }
 
+        // GET: api/Hotels/1/Rooms
+        [HttpGet]
+        [Route("{hotelId}/Rooms")]
+        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetAllRoomsAtHotel(int hotelId)
+        {
+            return await _hotelRoom.GetAllRoomsAtHotel(hotelId);
+        }
+
+
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
         [Route("{hotelId}/Rooms/{roomId}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomId, int hotelId)
+        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNum, int hotelId)
         {
-            return await _hotelRoom.GetHotelRoom(roomId, hotelId);
+            return await _hotelRoom.GetHotelRoom(roomNum, hotelId);
         }
 
         // PUT: api/HotelRooms/5
@@ -57,17 +66,17 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int roomId, int hotelId)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int roomNum, int hotelId)
         {
-            await _hotelRoom.AddRoomToHotel(roomId, hotelId);
+            await _hotelRoom.AddRoomToHotel(roomNum, hotelId);
             return Ok();
         }
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomId, int hotelId)
+        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomNum, int hotelId)
         {
-            await _hotelRoom.RemoveRoomFromHotel(roomId, hotelId);
+            await _hotelRoom.RemoveRoomFromHotel(roomNum, hotelId);
             return Ok();
         }
     }

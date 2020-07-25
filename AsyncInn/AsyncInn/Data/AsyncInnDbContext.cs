@@ -27,7 +27,7 @@ namespace AsyncInn.Data
         {
             modelBuiler.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
 
-            modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId});
+            modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId });
 
             // seed hotelRoom data
             modelBuiler.Entity<HotelRoom>().HasData(
@@ -38,8 +38,25 @@ namespace AsyncInn.Data
                     RoomNumber = 1,
                     Rate = 75.00M,
                     PetFriendly = true
-                }
+                },
 
+                new HotelRoom
+                {
+                    HotelId = 1,
+                    RoomId = 2,
+                    RoomNumber = 2,
+                    Rate = 125.00M,
+                    PetFriendly = false
+                },
+
+                new HotelRoom
+                {
+                    HotelId = 2,
+                    RoomId = 3,
+                    RoomNumber = 1,
+                    Rate = 100.00M,
+                    PetFriendly = true
+                }
             );
 
             // seed hotel data

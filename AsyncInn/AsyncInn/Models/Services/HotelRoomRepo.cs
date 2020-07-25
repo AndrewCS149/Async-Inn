@@ -47,12 +47,24 @@ namespace AsyncInn.Models.Services
         /// <summary>
         /// Returns a specified hotel room
         /// </summary>
-        /// <param name="id">Unique identifier of hotel room</param>
+        /// <param name="roomNum">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoom> GetHotelRoom(int roomId, int hotelId)
+        public async Task<HotelRoom> GetHotelRoom(int roomNum, int hotelId)
         {
-            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomId, hotelId);
+            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
             return hotelRoom;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
+        /// <returns>Task of completion</returns>
+        public async Task<List<HotelRoom>> GetAllRoomsAtHotel(int hotelId)
+        {
+            var hotelRooms = await _context.HotelRoom.Where(x => x.HotelId == hotelId).Include(x => x.Hotel).ToListAsync();
+            return hotelRooms;
         }
 
         /// <summary>
@@ -70,14 +82,14 @@ namespace AsyncInn.Models.Services
         /// <summary>
         /// Adds a room to a hotel
         /// </summary>
-        /// <param name="roomId">Unique identifier of a room</param>
+        /// <param name="roomNum">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task AddRoomToHotel(int roomId, int hotelId)
+        public async Task AddRoomToHotel(int roomNum, int hotelId)
         {
             HotelRoom hotelRoom = new HotelRoom()
             {
-                RoomId = roomId,
+                RoomId = roomNum,
                 HotelId = hotelId
             };
             _context.Entry(hotelRoom).State = EntityState.Added;
@@ -87,11 +99,12 @@ namespace AsyncInn.Models.Services
         /// <summary>
         /// Deletes a specified hotel room
         /// </summary>
-        /// <param name="id">Unique identifier of hotel room</param>
+        /// <param name="roomNum">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task Delete(int roomId, int hotelId)
+        public async Task Delete(int roomNum, int hotelId)
         {
-            HotelRoom hotelRoom = await GetHotelRoom(roomId, hotelId);
+            HotelRoom hotelRoom = await GetHotelRoom(roomNum, hotelId);
             _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -99,12 +112,12 @@ namespace AsyncInn.Models.Services
         /// <summary>
         /// Removes a room from a hotel
         /// </summary>
-        /// <param name="roomId">Unique identifier of a room</param>
+        /// <param name="roomNum">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task RemoveRoomFromHotel(int roomId, int hotelId)
+        public async Task RemoveRoomFromHotel(int roomNum, int hotelId)
         {
-            var result = await _context.HotelRoom.FirstOrDefaultAsync(x => x.HotelId == hotelId && x.RoomId == roomId);
+            var result = await _context.HotelRoom.FirstOrDefaultAsync(x => x.HotelId == hotelId && x.RoomId == roomNum);
             await _context.SaveChangesAsync();
         }
 
