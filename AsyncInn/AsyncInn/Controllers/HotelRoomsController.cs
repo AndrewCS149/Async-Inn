@@ -30,6 +30,15 @@ namespace AsyncInn.Controllers
             return await _hotelRoom.GetAllHotelRooms();
         }
 
+        // TODO: route comment
+        // GET:
+        [HttpGet]
+        [Route("{hotelId}/Rooms/{roomNum}/Details")]
+        public async Task<ActionResult<HotelRoom>> GetHotelRoomDetails(int hotelId, int roomNum)
+        {
+            return await _hotelRoom.GetHotelRoomDetails(hotelId, roomNum);
+        }
+
         // GET: api/Hotels/1/Rooms
         [HttpGet]
         [Route("{hotelId}/Rooms")]
@@ -41,43 +50,51 @@ namespace AsyncInn.Controllers
 
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
-        [Route("{hotelId}/Rooms/{roomId}")]
+        [Route("{hotelId}/Rooms/{roomNum}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNum, int hotelId)
         {
-            return await _hotelRoom.GetHotelRoom(roomNum, hotelId);
+            var hotelRoom = await _hotelRoom.GetHotelRoom(roomNum, hotelId);
+
+            if (hotelRoom == null)
+                return NotFound();
+
+            return hotelRoom;
         }
 
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotelRoom(int id, HotelRoom hotelRoom)
+        [HttpPut]
+        [Route("{hotelId}/Rooms/{roomNumber}")]
+        public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
         {
-            if (id != hotelRoom.HotelId)
+            if (hotelId != hotelRoom.HotelId || roomNumber != hotelRoom.RoomNumber)
             {
                 return BadRequest();
             }
 
-            var updatedHotelRoom = await _hotelRoom.Update(hotelRoom);
-            return Ok(updatedHotelRoom);
+            await _hotelRoom.Update(hotelRoom);
+            return NoContent();
         }
 
         // POST: api/HotelRooms
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int roomNum, int hotelId)
+        [Route("/{hotelId}/Rooms")]
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom, int hotelId)
         {
-            await _hotelRoom.AddRoomToHotel(roomNum, hotelId);
-            return Ok();
+            await _hotelRoom.Create(hotelRoom, hotelId);
+            return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelId }, hotelRoom);
         }
 
         // DELETE: api/HotelRooms/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("{hotelId}/Rooms/{roomNumber}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomNum, int hotelId)
         {
-            await _hotelRoom.RemoveRoomFromHotel(roomNum, hotelId);
-            return Ok();
+            await _hotelRoom.Delete(roomNum, hotelId);
+            return NoContent();
         }
     }
 }

@@ -96,7 +96,7 @@ namespace AsyncInn.Data
                 {
                     Id = 1,
                     Name = "Relax",
-                    Layout = 2
+                    Layout = 1
                 },
                 new Room
                 {

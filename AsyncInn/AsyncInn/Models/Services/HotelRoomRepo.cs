@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AsyncInn.Models.Services
 {
@@ -26,8 +27,9 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoom> Create(HotelRoom hotelRoom)
+        public async Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId)
         {
+            hotelRoom.HotelId = hotelId;
             _context.Entry(hotelRoom).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
@@ -44,6 +46,20 @@ namespace AsyncInn.Models.Services
             return hotelRooms;
         }
 
+        public async Task<HotelRoom> GetHotelRoomDetails(int hotelId, int roomNum)
+        {
+            // TODO: DELETE this
+            //var roomDetails = await _context.HotelRoom.Where(x => x.RoomNumber == roomNum && x.HotelId == hotelId).Include(x => x.Room).ToListAsync();
+
+            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(hotelId, roomNum);
+
+            var roomDeets = await _context.Room.Where(x => hotelRoom.RoomId == x.Id).Include(x => x.RoomAmenities).ThenInclude(x => x.Amenity).ToListAsync();
+
+            hotelRoom.Room = roomDeets;
+
+            return hotelRoom;
+        }
+
         /// <summary>
         /// Returns a specified hotel room
         /// </summary>
@@ -52,18 +68,19 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<HotelRoom> GetHotelRoom(int roomNum, int hotelId)
         {
-            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
-            return hotelRoom;
+            //HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
+            var room = await _context.HotelRoom.Where(x => x.HotelId == hotelId && roomNum == x.RoomNumber).Include(x => x.Hotel).Include(x => x.Room).ThenInclude(x => x.RoomAmenities).FirstOrDefaultAsync();
+            return room;
         }
 
         /// <summary>
-        /// 
+        /// Returns all rooms at a specified hotel
         /// </summary>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
         public async Task<List<HotelRoom>> GetAllRoomsAtHotel(int hotelId)
         {
-            var hotelRooms = await _context.HotelRoom.Where(x => x.HotelId == hotelId).Include(x => x.Hotel).ToListAsync();
+            var hotelRooms = await _context.HotelRoom.Where(x => x.HotelId == hotelId).Include(x => x.Room).ToListAsync();
             return hotelRooms;
         }
 
@@ -109,17 +126,18 @@ namespace AsyncInn.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        /// <summary>
-        /// Removes a room from a hotel
-        /// </summary>
-        /// <param name="roomNum">Unique identifier of a room</param>
-        /// <param name="hotelId">Unique identifier of a hotel</param>
-        /// <returns>Task of completion</returns>
-        public async Task RemoveRoomFromHotel(int roomNum, int hotelId)
-        {
-            var result = await _context.HotelRoom.FirstOrDefaultAsync(x => x.HotelId == hotelId && x.RoomId == roomNum);
-            await _context.SaveChangesAsync();
-        }
+        //// TODO: is this doing anything????
+        ///// <summary>
+        ///// Removes a room from a hotel
+        ///// </summary>
+        ///// <param name="roomNum">Unique identifier of a room</param>
+        ///// <param name="hotelId">Unique identifier of a hotel</param>
+        ///// <returns>Task of completion</returns>
+        //public async Task RemoveRoomFromHotel(int roomNum, int hotelId)
+        //{
+        //    var result = await _context.HotelRoom.FirstOrDefaultAsync(x => x.HotelId == hotelId && x.RoomId == roomNum);
+        //    await _context.SaveChangesAsync();
+        //}
 
     }
 }
