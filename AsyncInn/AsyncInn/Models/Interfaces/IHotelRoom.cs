@@ -7,11 +7,11 @@ namespace AsyncInn.Models.Interfaces
 {
     public interface IHotelRoom
     {
-        // TODO: add parameter to summary comment
         /// <summary>
         /// Creates a hotel room
         /// </summary>
         /// <param name="hotelRoom">The hotel room to create</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
         Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId);
 

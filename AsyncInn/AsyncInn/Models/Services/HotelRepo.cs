@@ -45,7 +45,6 @@ namespace AsyncInn.Models.Services
             return hotels;
         }
 
-        // TODO: not grabbing all the hotel info on route
         /// <summary>
         /// Returns a specified hotel
         /// </summary>
