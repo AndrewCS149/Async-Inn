@@ -8,12 +8,7 @@ namespace AsyncInn.Models
 {
     public class RoomAmenities
     {
-        [Required]
-        [Display(Name = "Amenity Name:")]
         public int AmenitiesId { get; set; }
-
-        [Required]
-        [Display(Name = "Room Type:")]
         public int RoomId { get; set; }
 
         // navigation properties

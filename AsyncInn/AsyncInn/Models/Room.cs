@@ -9,14 +9,7 @@ namespace AsyncInn.Models
     public class Room
     {
         public int Id { get; set; }
-
-        [Required]
-        [Display(Name = "Room Type Name:")]
         public string Name { get; set; }
-
-        [Required]
-        [Display(Name = "Layout Type:")]
-        [EnumDataType(typeof(Layout))]
         public int Layout { get; set; }
 
         // nav props
