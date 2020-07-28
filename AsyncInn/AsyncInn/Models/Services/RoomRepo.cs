@@ -12,13 +12,16 @@ namespace AsyncInn.Models.Services
     public class RoomRepo : IRoom
     {
         private AsyncInnDbContext _context;
+        private IAmenities _amenities;
 
         /// <summary>
         /// Constructor for RoomRepo
         /// </summary>
         /// <param name="context">Database context<</param>
-        public RoomRepo(AsyncInnDbContext context)
+        /// <param name="amenities">IAmenities reference</param>
+        public RoomRepo(AsyncInnDbContext context, IAmenities amenities)
         {
+            _amenities = amenities;
             _context = context;
         }
 
@@ -64,15 +67,22 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<Room> GetRoom(int id)
         {
-            Room room = await _context.Room.FindAsync(id);
+            var room = await _context.Room.Where(r => r.Id == id)
+                                          .Include(ra => ra.RoomAmenities)
+                                          .ThenInclude(a => a.Amenity)
+                                          .FirstOrDefaultAsync();
 
-            // include all of the amenities that the room has
-            var amenity = await _context.RoomAmenity.Where(x => x.RoomId == id)
-                .Include(x => x.Amenity)
-                .ToListAsync();
-
-            room.RoomAmenities = amenity;
             return room;
+
+            //Room room = await _context.Room.FindAsync(id);
+
+            //// include all of the amenities that the room has
+            //var amenity = await _context.RoomAmenity.Where(x => x.RoomId == id)
+            //    .Include(x => x.Amenity)
+            //    .ToListAsync();
+
+            //room.RoomAmenities = amenity;
+            //return room;
         }
 
         /// <summary>
