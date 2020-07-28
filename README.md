@@ -74,6 +74,8 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ### Change Log
 
+- 1.12 Modify all amenities methods into DTO - 27 Jul 2020
+- 1.11 AmenitiesExists() - 27 Jul 2020
 - 1.10 Add IHotelRoom interface - 23 Jul 2020
 - 1.9 Add HotelRoom repo file - 23 Jul 2020
 - 1.8 Add RoomAmenities & HotelRoom models - 23 Jul 2020

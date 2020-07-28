@@ -44,6 +44,7 @@ namespace AsyncInn.Controllers
             return await _amenity.GetAllAmenities();
         }      
 
+        // TODO: How do I run this in postman?
         // PUT: api/Amenities/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -70,39 +71,28 @@ namespace AsyncInn.Controllers
             return NoContent();
         }
 
-        // TODO: not working
         // POST: api/Amenities
         [HttpPost]
         public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
         {
             await _amenity.Create(amenity);
             return CreatedAtAction("GetAmenities", new { id = amenity.Id }, amenity);
-            //if (!ModelState.IsValid)
-            //    return BadRequest(ModelState);
-
-            //_context.Amenities.Add(amenity);
-            //await _context.SaveChangesAsync();
-
-            //_context.Entry(amenity).Reference(a => a.Name).Load();
-
-
-            //var dto = new AmenityDTO()
-            //{
-            //    Id = amenity.Id,
-            //    Name = amenity.Name
-            //};
-            //return CreatedAtRoute("DefaultApi", new { id = amenity.Id }, dto);
         }
 
+        // TODO: not working!!
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
         {
-            await _amenity.Delete(id);
-            return NoContent();
+            var amenities = await _context.Amenities.FindAsync(id);
+            if (amenities == null)
+                return NotFound();
+
+            _context.Amenities.Remove(amenities);
+            await _context.SaveChangesAsync();
+            return amenities;
         }
 
-        // TODO: fill out summary comment
         /// <summary>
         /// Returns true if an amenity has an Id matching the passed in Id
         /// </summary>
