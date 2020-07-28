@@ -93,7 +93,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            Amenities amenity = await GetAmenity(id);
+            var amenity = await GetAmenity(id);
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
