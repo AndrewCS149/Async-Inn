@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.DTOs;
+using SQLitePCL;
 
 namespace AsyncInn.Controllers
 {
@@ -16,6 +18,7 @@ namespace AsyncInn.Controllers
     public class HotelsController : ControllerBase
     {
         private readonly IHotel _hotel;
+        private readonly AsyncInnDbContext _context;
 
         // our constructor is bringing in a reference to our db
         public HotelsController(IHotel hotel)
@@ -25,16 +28,21 @@ namespace AsyncInn.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetAllHotels()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetAllHotels()
         {
             return await _hotel.GetAllHotels();
         }
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
-            return await _hotel.GetHotel(id);
+            var hotel = await _hotel.GetHotel(id);
+
+            if (hotel == null)
+                return NotFound();
+
+            return hotel;
         }
 
         // PUT: api/Hotels/5
@@ -44,18 +52,28 @@ namespace AsyncInn.Controllers
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
             if (id != hotel.Id)
-            {
                 return BadRequest();
+
+            try
+            {
+                await _context.SaveChangesAsync();
             }
-            var updatedHotel = await _hotel.Update(hotel);
-            return Ok(updatedHotel);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HotelExists(id))
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            return NoContent();
         }
 
         // POST: api/Hotels
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotel)
         {
             await _hotel.Create(hotel);
             return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
@@ -63,10 +81,20 @@ namespace AsyncInn.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteHotel(int id)
+        public async Task<ActionResult<Hotel>> DeleteHotel(int id)
         {
             await _hotel.Delete(id);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Returns true if a hotel has an Id matching the passed in Id
+        /// </summary>
+        /// <param name="id">The Id to evaluate</param>
+        /// <returns>Returns a bool</returns>
+        private bool HotelExists(int id)
+        {
+            return _context.Hotels.Any(h => h.Id == id);
         }
     }
 }
