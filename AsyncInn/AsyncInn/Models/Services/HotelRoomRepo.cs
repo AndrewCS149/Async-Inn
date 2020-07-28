@@ -63,7 +63,6 @@ namespace AsyncInn.Models.Services
             return hotelRooms;
         }
 
-        // TODO: fix
         /// <summary>
         /// Retrieves the hotel room details of a specified room
         /// </summary>
@@ -79,7 +78,16 @@ namespace AsyncInn.Models.Services
                                                .ThenInclude(a => a.Amenity)
                                                .FirstOrDefaultAsync();
 
-            return room;
+            HotelRoomDTO dto = new HotelRoomDTO()
+            {
+                HotelId = room.HotelId,
+                RoomId = room.RoomId,
+                RoomNumber = room.RoomNumber,
+                DailyRate = room.Rate,
+                PetFriendly = room.PetFriendly
+            };
+
+            return dto;
         }
 
         /// <summary>
@@ -104,7 +112,6 @@ namespace AsyncInn.Models.Services
             return dto;
         }
 
-        // TODO: fix
         /// <summary>
         /// Returns all rooms at a specified hotel
         /// </summary>
@@ -112,7 +119,12 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<List<HotelRoomDTO>> GetAllRoomsAtHotel(int hotelId)
         {
-            var hotelRooms = await _context.HotelRoom.Where(x => x.HotelId == hotelId).Include(x => x.Room).ToListAsync();
+            var list = await _context.HotelRoom.ToListAsync();
+            var hotelRooms = new List<HotelRoomDTO>();
+
+            foreach (var room in list)
+                hotelRooms.Add(await GetHotelRoom(hotelId, room.RoomNumber));
+
             return hotelRooms;
         }
 
