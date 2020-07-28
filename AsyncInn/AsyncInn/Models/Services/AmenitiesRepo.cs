@@ -44,9 +44,14 @@ namespace AsyncInn.Models.Services
         /// Returns all amenities
         /// </summary>
         /// <returns>Task of completion</returns>
-        public async Task<List<Amenities>> GetAllAmenities()
+        public async Task<List<AmenityDTO>> GetAllAmenities()
         {
-            var amenities = await _context.Amenities.ToListAsync();
+            var list = await _context.Amenities.ToListAsync();
+            var amenities = new List<AmenityDTO>();
+
+            foreach (var item in list)
+                amenities.Add(await GetAmenity(item.Id));
+
             return amenities;
         }
 
