@@ -46,12 +46,23 @@ namespace AsyncInn.Controllers
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
             if (id != room.Id)
-            {
                 return BadRequest();
+
+            _context.Entry(room).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!RoomExists(id))
+                    return NotFound();
+                else
+                    throw;
             }
 
-            var updatedRoom = await _room.Update(room);
-            return Ok(updatedRoom);
+            return NoContent();
         }
 
         // POST: api/Rooms
