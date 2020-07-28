@@ -9,6 +9,7 @@ using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using System.Runtime.InteropServices.WindowsRuntime;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Controllers
 {
@@ -17,6 +18,7 @@ namespace AsyncInn.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly IRoom _room;
+        private readonly AsyncInnDbContext _context;
 
         public RoomsController(IRoom room)
         {
@@ -25,14 +27,14 @@ namespace AsyncInn.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetAllRooms()
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetAllRooms()
         {
             return await _room.GetAllRooms();
         }
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             return await _room.GetRoom(id);
         }
@@ -56,7 +58,7 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.Create(room);
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);
@@ -86,6 +88,16 @@ namespace AsyncInn.Controllers
         {
             await _room.Delete(id);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Returns true if a room has an Id matching the passed in Id
+        /// </summary>
+        /// <param name="id">The Id to evaluate</param>
+        /// <returns>Returns a bool</returns>
+        private bool RoomExists(int id)
+        {
+            return _context.Room.Any(e => e.Id == id);
         }
     }
 }
