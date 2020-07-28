@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Controllers
 {
@@ -16,25 +17,48 @@ namespace AsyncInn.Controllers
     public class AmenitiesController : ControllerBase
     {
         private readonly IAmenities _amenity;
+        private readonly AsyncInnDbContext _context;
 
-        public AmenitiesController(IAmenities amenity)
+        public AmenitiesController(IAmenities amenity, AsyncInnDbContext context)
         {
+            _context = context;
             _amenity = amenity;
+        }
+
+        //// GET: api/Amenities
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Amenities>>> GetAllAmenities()
+        //{
+        //    return await _amenity.GetAllAmenities();
+        //}
+
+        // GET: api/Amenities/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Amenities>> GetAmenity(int id)
+        //{
+        //    return await _amenity.GetAmenity(id);
+        //}
+
+        // GET: api/Amenities/4
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<AmenityDTO> GetAmenity(int id)
+        {
+            return await _amenity.GetAmenity(id);
         }
 
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenities>>> GetAllAmenities()
+        public IQueryable<AmenityDTO> GetAmenities()
         {
-            return await _amenity.GetAllAmenities();
-        }
-
-        // GET: api/Amenities/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Amenities>> GetAmenity(int id)
-        {
-            return await _amenity.GetAmenity(id);
-        }
+            var amenities = from a in _context.Amenities
+                            select new AmenityDTO()
+                            {
+                                Id = a.Id,
+                                Name = a.Name
+                            };
+            return amenities;
+        }      
 
         // PUT: api/Amenities/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -53,11 +77,33 @@ namespace AsyncInn.Controllers
         // POST: api/Amenities
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        //[HttpPost]
+        //public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
+        //{
+        //    await _amenity.Create(amenities);
+        //    return CreatedAtAction("GetAmenities", new { id = amenities.Id }, amenities);
+        //}
+
+        // TODO: not working
+        // POST: api/Amenities
         [HttpPost]
-        public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
+        public async Task<ActionResult<Amenities>> PostAmenity(Amenities amenity)
         {
-            await _amenity.Create(amenities);
-            return CreatedAtAction("GetAmenities", new { id = amenities.Id }, amenities);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _context.Amenities.Add(amenity);
+            await _context.SaveChangesAsync();
+
+            _context.Entry(amenity).Reference(a => a.Name).Load();
+
+
+            var dto = new AmenityDTO()
+            {
+                Id = amenity.Id,
+                Name = amenity.Name
+            };
+            return CreatedAtRoute("DefaultApi", new { id = amenity.Id }, dto);
         }
 
         // DELETE: api/Amenities/5

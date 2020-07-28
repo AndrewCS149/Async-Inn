@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AsyncInn.Models.Services
 {
@@ -44,6 +45,7 @@ namespace AsyncInn.Models.Services
             return hotels;
         }
 
+        // TODO: not grabbing all the hotel info on route
         /// <summary>
         /// Returns a specified hotel
         /// </summary>
@@ -51,7 +53,12 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<Hotel> GetHotel(int id)
         {
-            Hotel hotel = await _context.Hotels.FindAsync(id);
+            Hotel hotel = await _context.Hotels.Where(x => x.Id == id)
+                                               .Include(x => x.HotelRoom)
+                                               .ThenInclude(x => x.Room)
+                                               .ThenInclude(x => x.RoomAmenities)
+                                               .ThenInclude(x => x.Amenity)
+                                               .FirstOrDefaultAsync();
             return hotel;
         }
 

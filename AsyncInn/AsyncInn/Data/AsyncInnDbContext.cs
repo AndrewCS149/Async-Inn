@@ -51,9 +51,9 @@ namespace AsyncInn.Data
 
                 new HotelRoom
                 {
-                    HotelId = 2,
+                    HotelId = 1,
                     RoomId = 3,
-                    RoomNumber = 1,
+                    RoomNumber = 3,
                     Rate = 100.00M,
                     PetFriendly = true
                 }

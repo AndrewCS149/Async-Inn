@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Models.Services
 {
@@ -26,12 +27,18 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="amenity">The amenity to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<Amenities> Create(Amenities amenity)
+        public async Task<AmenityDTO> Create(Amenities amenity)
         {
-            _context.Entry(amenity).State = EntityState.Added;
+
+            Amenities entity = new Amenities()
+            {
+                Name = amenity.Name
+            };
+
+            _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
-            return amenity;
+            return entity;
         }
 
         /// <summary>
@@ -49,15 +56,23 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of amenity</param>
         /// <returns>Task of completion</returns>
-        public async Task<Amenities> GetAmenity(int id)
+        public async Task<AmenityDTO> GetAmenity(int id)
         {
-            Amenities amenity = await _context.Amenities.FindAsync(id);
-            var roomAmenities = await _context.RoomAmenity.Where(x => x.AmenitiesId == id)
-                .Include(x => x.Room)
-                .ToListAsync();
+            var amenity = await _context.Amenities.FindAsync(id);
+            //var amenity = await _context.Amenities.Select(a =>
+            //    new AmenityDTO()
+            //    {
+            //        Id = a.Id,
+            //        Name = a.Name
+            //    }).SingleOrDefaultAsync(a => a.Id == id);
 
-            amenity.RoomAmenities = roomAmenities;
-            return amenity;
+            AmenityDTO dto = new AmenityDTO()
+            {
+                Id = amenity.Id,
+                Name = amenity.Name
+            };
+
+            return dto;
         }
 
         /// <summary>
