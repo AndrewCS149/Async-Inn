@@ -18,7 +18,6 @@ namespace AsyncInn.Controllers
     public class HotelsController : ControllerBase
     {
         private readonly IHotel _hotel;
-        private readonly AsyncInnDbContext _context;
 
         // our constructor is bringing in a reference to our db
         public HotelsController(IHotel hotel)
@@ -54,17 +53,7 @@ namespace AsyncInn.Controllers
             if (id != hotel.Id)
                 return BadRequest();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+            await _hotel.Update(hotel);
 
             return NoContent();
         }
@@ -85,16 +74,6 @@ namespace AsyncInn.Controllers
         {
             await _hotel.Delete(id);
             return NoContent();
-        }
-
-        /// <summary>
-        /// Returns true if a hotel has an Id matching the passed in Id
-        /// </summary>
-        /// <param name="id">The Id to evaluate</param>
-        /// <returns>Returns a bool</returns>
-        private bool HotelExists(int id)
-        {
-            return _context.Hotels.Any(h => h.Id == id);
         }
     }
 }

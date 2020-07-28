@@ -18,7 +18,6 @@ namespace AsyncInn.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly IRoom _room;
-        private readonly AsyncInnDbContext _context;
 
         public RoomsController(IRoom room)
         {
@@ -55,19 +54,7 @@ namespace AsyncInn.Controllers
             if (id != room.Id)
                 return BadRequest();
 
-            _context.Entry(room).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
+            await _room.Update(room);
 
             return NoContent();
         }
@@ -106,16 +93,6 @@ namespace AsyncInn.Controllers
         {
             await _room.Delete(id);
             return NoContent();
-        }
-
-        /// <summary>
-        /// Returns true if a room has an Id matching the passed in Id
-        /// </summary>
-        /// <param name="id">The Id to evaluate</param>
-        /// <returns>Returns a bool</returns>
-        private bool RoomExists(int id)
-        {
-            return _context.Room.Any(e => e.Id == id);
         }
     }
 }

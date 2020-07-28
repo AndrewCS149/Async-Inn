@@ -13,16 +13,14 @@ namespace AsyncInn.Models.Services
     public class HotelRoomRepo : IHotelRoom
     {
         private AsyncInnDbContext _context;
-        private IHotelRoom _hotelRoom;
 
         /// <summary>
         /// Constructor for HotelRoomRepo
         /// </summary>
         /// <param name="context">Database context</param>
         /// <param name="hotelRoom">IHotelRoom reference</param>
-        public HotelRoomRepo(AsyncInnDbContext context, IHotelRoom hotelRoom)
+        public HotelRoomRepo(AsyncInnDbContext context)
         {
-            _hotelRoom = hotelRoom;
             _context = context;
         }
 

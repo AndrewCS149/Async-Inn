@@ -17,7 +17,6 @@ namespace AsyncInn.Controllers
     public class AmenitiesController : ControllerBase
     {
         private readonly IAmenities _amenity;
-        private readonly AsyncInnDbContext _context;
 
         public AmenitiesController(IAmenities amenity)
         {
@@ -54,20 +53,7 @@ namespace AsyncInn.Controllers
             if (id != amenities.Id)
                 return BadRequest();
 
-            _context.Entry(amenities).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AmenitiesExists(id))
-                    return NotFound();
-                else
-                    throw;
-            }
-
+            await _amenity.Update(amenities);
             return NoContent();
         }
 
@@ -84,24 +70,8 @@ namespace AsyncInn.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
         {
-            var amenities = await _context.Amenities.FindAsync(id);
-            if (amenities == null)
-                return NotFound();
-
-            _context.Amenities.Remove(amenities);
-            await _context.SaveChangesAsync();
-            return amenities;
+            await _amenity.Delete(id);
+            return NoContent();
         }
-
-        /// <summary>
-        /// Returns true if an amenity has an Id matching the passed in Id
-        /// </summary>
-        /// <param name="id">The Id to evaluate</param>
-        /// <returns>Returns a bool</returns>
-        private bool AmenitiesExists(int id)
-        {
-            return _context.Amenities.Any(e => e.Id == id);
-        }
-
     }
 }
