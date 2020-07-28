@@ -61,7 +61,7 @@ namespace AsyncInn.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (GetAmenity(id) == null)
+                if (!AmenitiesExists(id))
                     return NotFound();
                 else
                     throw;
@@ -73,23 +73,25 @@ namespace AsyncInn.Controllers
         // TODO: not working
         // POST: api/Amenities
         [HttpPost]
-        public async Task<ActionResult<Amenities>> PostAmenity(Amenities amenity)
+        public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            await _amenity.Create(amenity);
+            return CreatedAtAction("GetAmenities", new { id = amenity.Id }, amenity);
+            //if (!ModelState.IsValid)
+            //    return BadRequest(ModelState);
 
-            _context.Amenities.Add(amenity);
-            await _context.SaveChangesAsync();
+            //_context.Amenities.Add(amenity);
+            //await _context.SaveChangesAsync();
 
-            _context.Entry(amenity).Reference(a => a.Name).Load();
+            //_context.Entry(amenity).Reference(a => a.Name).Load();
 
 
-            var dto = new AmenityDTO()
-            {
-                Id = amenity.Id,
-                Name = amenity.Name
-            };
-            return CreatedAtRoute("DefaultApi", new { id = amenity.Id }, dto);
+            //var dto = new AmenityDTO()
+            //{
+            //    Id = amenity.Id,
+            //    Name = amenity.Name
+            //};
+            //return CreatedAtRoute("DefaultApi", new { id = amenity.Id }, dto);
         }
 
         // DELETE: api/Amenities/5
@@ -98,6 +100,17 @@ namespace AsyncInn.Controllers
         {
             await _amenity.Delete(id);
             return NoContent();
+        }
+
+        // TODO: fill out summary comment
+        /// <summary>
+        /// Returns true if an amenity has an Id matching the passed in Id
+        /// </summary>
+        /// <param name="id">The Id to evaluate</param>
+        /// <returns>Returns a bool</returns>
+        private bool AmenitiesExists(int id)
+        {
+            return _context.Amenities.Any(e => e.Id == id);
         }
 
     }
