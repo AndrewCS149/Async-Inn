@@ -26,7 +26,7 @@ namespace AsyncInn.Models
 
     public enum Layout
     {
-        TwoBedSuite, 
+        TwoBedSuite = 1,
         OneBedSuite,
         Studio
     }
