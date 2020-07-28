@@ -7,11 +7,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace AsyncInn.Data
 {
-    public class AsyncInnDbContext : IdentityDbContext<>
+    public class AsyncInnDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Room { get; set; }
@@ -24,14 +25,17 @@ namespace AsyncInn.Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuiler)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuiler.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
+            // need to get the original behavior for our model override
+            base.OnModelCreating(modelBuilder);
 
-            modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId });
+            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
+
+            modelBuilder.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId });
 
             // seed hotelRoom data
-            modelBuiler.Entity<HotelRoom>().HasData(
+            modelBuilder.Entity<HotelRoom>().HasData(
                 new HotelRoom
                 {
                     HotelId = 1,
@@ -61,7 +65,7 @@ namespace AsyncInn.Data
             );
 
             // seed hotel data
-            modelBuiler.Entity<Hotel>().HasData(
+            modelBuilder.Entity<Hotel>().HasData(
                 new Hotel
                 {
                     Id = 1,
@@ -92,7 +96,7 @@ namespace AsyncInn.Data
             );
 
             // seed room data
-            modelBuiler.Entity<Room>().HasData(
+            modelBuilder.Entity<Room>().HasData(
                 new Room
                 {
                     Id = 1,
@@ -114,7 +118,7 @@ namespace AsyncInn.Data
             );
 
             // seed amenities data
-            modelBuiler.Entity<Amenities>().HasData(
+            modelBuilder.Entity<Amenities>().HasData(
                 new Amenities
                 {
                     Id = 1,
