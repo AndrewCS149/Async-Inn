@@ -39,15 +39,9 @@ namespace AsyncInn.Controllers
 
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<AmenityDTO>> GetAmenities()
+        public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
-            var amenities = from a in _context.Amenities
-                            select new AmenityDTO()
-                            {
-                                Id = a.Id,
-                                Name = a.Name
-                            };
-            return amenities;
+            return await _amenity.GetAllAmenities();
         }      
 
         // PUT: api/Amenities/5

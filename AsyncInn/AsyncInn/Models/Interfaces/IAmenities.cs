@@ -19,7 +19,7 @@ namespace AsyncInn.Models.Interfaces
         /// Returns all amenities
         /// </summary>
         /// <returns>Task of completion</returns>
-        Task<List<Amenities>> GetAllAmenities();
+        Task<List<AmenityDTO>> GetAllAmenities();
 
         /// <summary>
         /// Returns a specified amenity
