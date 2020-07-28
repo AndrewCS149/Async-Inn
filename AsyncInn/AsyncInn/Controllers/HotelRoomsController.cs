@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Controllers
 {
@@ -16,6 +17,7 @@ namespace AsyncInn.Controllers
     public class HotelRoomsController : ControllerBase
     {
         private readonly IHotelRoom _hotelRoom;
+        private readonly AsyncInnDbContext _context;
 
         public HotelRoomsController(IHotelRoom hotelRoom)
         {
@@ -26,7 +28,7 @@ namespace AsyncInn.Controllers
         // GET: api/Hotels/Rooms
         [HttpGet]
         [Route("Rooms")]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetAllHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetAllHotelRooms()
         {
             return await _hotelRoom.GetAllHotelRooms();
         }
@@ -35,7 +37,7 @@ namespace AsyncInn.Controllers
         // GET: api/Hotels/1/Rooms/2/Details
         [HttpGet]
         [Route("{hotelId}/Rooms/{roomNum}/Details")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoomDetails(int hotelId, int roomNum)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoomDetails(int hotelId, int roomNum)
         {
             return await _hotelRoom.GetHotelRoomDetails(hotelId, roomNum);
         }
@@ -44,7 +46,7 @@ namespace AsyncInn.Controllers
         // GET: api/Hotels/1/Rooms
         [HttpGet]
         [Route("{hotelId}/Rooms")]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetAllRoomsAtHotel(int hotelId)
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetAllRoomsAtHotel(int hotelId)
         {
             return await _hotelRoom.GetAllRoomsAtHotel(hotelId);
         }
@@ -53,7 +55,7 @@ namespace AsyncInn.Controllers
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
         [Route("{hotelId}/Rooms/{roomNum}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int roomNum, int hotelId)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int roomNum, int hotelId)
         {
             var hotelRoom = await _hotelRoom.GetHotelRoom(roomNum, hotelId);
 
@@ -84,7 +86,7 @@ namespace AsyncInn.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("/{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom, int hotelId)
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom, int hotelId)
         {
             await _hotelRoom.Create(hotelRoom, hotelId);
             return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelId }, hotelRoom);

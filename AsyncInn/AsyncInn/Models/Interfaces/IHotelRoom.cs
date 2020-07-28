@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncInn.Models.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,13 +14,13 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="hotelRoom">The hotel room to create</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        Task<HotelRoom> Create(HotelRoom hotelRoom, int hotelId);
+        Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom, int hotelId);
 
         /// <summary>
         /// Returns all hotel rooms
         /// </summary>
         /// <returns>Task of completion</returns>
-        Task<List<HotelRoom>> GetAllHotelRooms();
+        Task<List<HotelRoomDTO>> GetAllHotelRooms();
 
         /// <summary>
         /// Retrieves a specified hotel room's details
@@ -27,14 +28,14 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <param name="roomNum">Unique identifier of a room</param>
         /// <returns>Task of completion</returns>
-        Task<HotelRoom> GetHotelRoomDetails(int hotelId, int roomNum);
+        Task<HotelRoomDTO> GetHotelRoomDetails(int hotelId, int roomNum);
 
         /// <summary>
         /// Returns all rooms at a specified hotel
         /// </summary>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        Task<List<HotelRoom>> GetAllRoomsAtHotel(int hotelId);
+        Task<List<HotelRoomDTO>> GetAllRoomsAtHotel(int hotelId);
 
         /// <summary>
         /// Returns a specified hotel room
@@ -42,7 +43,7 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="roomId">Unique identifier of a room layout</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        Task<HotelRoom> GetHotelRoom(int roomNum, int hotelId);
+        Task<HotelRoomDTO> GetHotelRoom(int roomNum, int hotelId);
 
         /// <summary>
         /// Updates a hotel room
