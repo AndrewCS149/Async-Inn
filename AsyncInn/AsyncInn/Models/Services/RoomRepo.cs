@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AsyncInn.Models.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AsyncInn.Models.Services
 {
@@ -32,7 +33,14 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<RoomDTO> Create(RoomDTO room)
         {
-            _context.Entry(room).State = EntityState.Added;
+            Room entity = new Room()
+            {
+                Name = room.RoomType,
+                Layout = room.LayoutType
+            };
+
+
+            _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
             return room;
@@ -56,10 +64,6 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<List<RoomDTO>> GetAllRooms()
         {
-            // TODO: delete comments
-            //var rooms = await _context.Room.Include(x => x.RoomAmenities).ThenInclude(x => x.Amenity).ToListAsync();
-            //return rooms;
-
             var list = await _context.Room.ToListAsync();
             var rooms = new List<RoomDTO>();
 
@@ -86,24 +90,6 @@ namespace AsyncInn.Models.Services
             };
 
             return dto;
-
-            // TODO: Delete comment
-            //var room = await _context.Room.Where(r => r.Id == id)
-            //                              .Include(ra => ra.RoomAmenities)
-            //                              .ThenInclude(a => a.Amenity)
-            //                              .FirstOrDefaultAsync();
-
-            //return room;
-
-            //Room room = await _context.Room.FindAsync(id);
-
-            //// include all of the amenities that the room has
-            //var amenity = await _context.RoomAmenity.Where(x => x.RoomId == id)
-            //    .Include(x => x.Amenity)
-            //    .ToListAsync();
-
-            //room.RoomAmenities = amenity;
-            //return room;
         }
 
         /// <summary>

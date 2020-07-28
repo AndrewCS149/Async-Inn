@@ -108,7 +108,7 @@ namespace AsyncInn.Data
                 {
                     Id = 3,
                     Name = "Sooth",
-                    Layout = 0
+                    Layout = 2
                 }
             );
 
@@ -130,8 +130,6 @@ namespace AsyncInn.Data
                     Name = "Minibar"
                 }
             );
-
-
         }
     }
 }

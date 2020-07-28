@@ -25,6 +25,7 @@ namespace AsyncInn.Controllers
             _room = room;
         }
 
+        // Gets all room types
         // GET: api/Rooms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetAllRooms()
@@ -32,11 +33,17 @@ namespace AsyncInn.Controllers
             return await _room.GetAllRooms();
         }
 
+        // gets a specified room type
         // GET: api/Rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
-            return await _room.GetRoom(id);
+            var room = await _room.GetRoom(id);
+
+            if (room == null)
+                return NotFound();
+
+            return room;
         }
 
         // PUT: api/Rooms/5
