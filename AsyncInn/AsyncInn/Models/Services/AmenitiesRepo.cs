@@ -62,13 +62,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<AmenityDTO> GetAmenity(int id)
         {
-            var amenity = await _context.Amenities.FindAsync(id);
-            //var amenity = await _context.Amenities.Select(a =>
-            //    new AmenityDTO()
-            //    {
-            //        Id = a.Id,
-            //        Name = a.Name
-            //    }).SingleOrDefaultAsync(a => a.Id == id);
+            Amenities amenity = await _context.Amenities.FindAsync(id);
 
             AmenityDTO dto = new AmenityDTO()
             {
