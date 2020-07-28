@@ -27,7 +27,7 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="amenity">The amenity to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<AmenityDTO> Create(Amenities amenity)
+        public async Task<AmenityDTO> Create(AmenityDTO amenity)
         {
 
             Amenities entity = new Amenities()
@@ -37,8 +37,7 @@ namespace AsyncInn.Models.Services
 
             _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
-
-            return entity;
+            return amenity;
         }
 
         /// <summary>
