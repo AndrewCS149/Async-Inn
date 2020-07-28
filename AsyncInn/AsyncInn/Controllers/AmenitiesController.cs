@@ -51,11 +51,23 @@ namespace AsyncInn.Controllers
         public async Task<IActionResult> PutAmenities(int id, Amenities amenities)
         {
             if (id != amenities.Id)
-            {
                 return BadRequest();
+
+            _context.Entry(amenities).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
             }
-            var updatedAmenity = await _amenity.Update(amenities);
-            return Ok(updatedAmenity);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (GetAmenity(id) == null)
+                    return NotFound();
+                else
+                    throw;
+            }
+
+            return NoContent();
         }
 
         // TODO: not working
