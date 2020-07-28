@@ -66,13 +66,5 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="id">Unique identifier of hotel</param>
         /// <returns>Task of completion</returns>
         Task Delete(int roomNum, int hotelId);
-
-        ///// <summary>
-        ///// Removes a room from a hotel
-        ///// </summary>
-        ///// <param name="roomId">Unique identifier of a room layout</param>
-        ///// <param name="hotelId">Unique identifier of a hotel</param>
-        ///// <returns>Task of completion</returns>
-        //Task RemoveRoomFromHotel(int roomNum, int hotelId);
     }
 }

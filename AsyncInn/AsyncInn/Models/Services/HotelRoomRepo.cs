@@ -46,18 +46,22 @@ namespace AsyncInn.Models.Services
             return hotelRooms;
         }
 
+        /// <summary>
+        /// Retrieves the hotel room details of a specified room
+        /// </summary>
+        /// <param name="roomNum">Unique identifier of a room</param>
+        /// <param name="hotelId">Unique identifier of a hotel</param>
+        /// <returns>Task of completion</returns>
         public async Task<HotelRoom> GetHotelRoomDetails(int hotelId, int roomNum)
         {
-            // TODO: DELETE this
-            //var roomDetails = await _context.HotelRoom.Where(x => x.RoomNumber == roomNum && x.HotelId == hotelId).Include(x => x.Room).ToListAsync();
+            var room = await _context.HotelRoom.Where(h => h.HotelId == hotelId && h.RoomNumber == roomNum)
+                                               .Include(h => h.Hotel)
+                                               .Include(r => r.Room)
+                                               .ThenInclude(ra => ra.RoomAmenities)
+                                               .ThenInclude(a => a.Amenity)
+                                               .FirstOrDefaultAsync();
 
-            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(hotelId, roomNum);
-
-            var roomDeets = await _context.Room.Where(x => hotelRoom.RoomId == x.Id).Include(x => x.RoomAmenities).ThenInclude(x => x.Amenity).ToListAsync();
-
-            hotelRoom.Room = roomDeets;
-
-            return hotelRoom;
+            return room;
         }
 
         /// <summary>
@@ -125,19 +129,5 @@ namespace AsyncInn.Models.Services
             _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
-
-        //// TODO: is this doing anything????
-        ///// <summary>
-        ///// Removes a room from a hotel
-        ///// </summary>
-        ///// <param name="roomNum">Unique identifier of a room</param>
-        ///// <param name="hotelId">Unique identifier of a hotel</param>
-        ///// <returns>Task of completion</returns>
-        //public async Task RemoveRoomFromHotel(int roomNum, int hotelId)
-        //{
-        //    var result = await _context.HotelRoom.FirstOrDefaultAsync(x => x.HotelId == hotelId && x.RoomId == roomNum);
-        //    await _context.SaveChangesAsync();
-        //}
-
     }
 }

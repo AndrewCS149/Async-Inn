@@ -22,6 +22,7 @@ namespace AsyncInn.Controllers
             _hotelRoom = hotelRoom;
         }
 
+        // gets all hotel rooms in the entire database
         // GET: api/Hotels/Rooms
         [HttpGet]
         [Route("Rooms")]
@@ -30,8 +31,8 @@ namespace AsyncInn.Controllers
             return await _hotelRoom.GetAllHotelRooms();
         }
 
-        // TODO: route comment
-        // GET:
+        // gets all details of a specified hotel room
+        // GET: api/Hotels/1/Rooms/2/Details
         [HttpGet]
         [Route("{hotelId}/Rooms/{roomNum}/Details")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoomDetails(int hotelId, int roomNum)
@@ -39,6 +40,7 @@ namespace AsyncInn.Controllers
             return await _hotelRoom.GetHotelRoomDetails(hotelId, roomNum);
         }
 
+        // gets all the rooms at a specified hotel
         // GET: api/Hotels/1/Rooms
         [HttpGet]
         [Route("{hotelId}/Rooms")]
@@ -47,7 +49,7 @@ namespace AsyncInn.Controllers
             return await _hotelRoom.GetAllRoomsAtHotel(hotelId);
         }
 
-
+        // gets a specified room at a specified hotel
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
         [Route("{hotelId}/Rooms/{roomNum}")]
