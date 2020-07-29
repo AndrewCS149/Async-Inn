@@ -5,20 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using AsyncInn.Models.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AsyncInn.Models.Services
 {
     public class RoomRepo : IRoom
     {
         private AsyncInnDbContext _context;
+        private IAmenities _amenities;
 
         /// <summary>
         /// Constructor for RoomRepo
         /// </summary>
         /// <param name="context">Database context<</param>
-        public RoomRepo(AsyncInnDbContext context)
+        /// <param name="amenities">IAmenities reference</param>
+        public RoomRepo(AsyncInnDbContext context, IAmenities amenities)
         {
+            _amenities = amenities;
             _context = context;
         }
 
@@ -27,9 +31,16 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="room">The room to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<Room> Create(Room room)
+        public async Task<RoomDTO> Create(RoomDTO room)
         {
-            _context.Entry(room).State = EntityState.Added;
+            Room entity = new Room()
+            {
+                Name = room.RoomType,
+                Layout = room.LayoutType
+            };
+
+
+            _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
             return room;
@@ -42,7 +53,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion/returns>
         public async Task Delete(int id)
         {
-            Room room= await GetRoom(id);
+            var room= await GetRoom(id);
             _context.Entry(room).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -51,9 +62,14 @@ namespace AsyncInn.Models.Services
         /// Returns all rooms
         /// </summary>
         /// <returns>Task of completion</returns>
-        public async Task<List<Room>> GetAllRooms()
+        public async Task<List<RoomDTO>> GetAllRooms()
         {
-            var rooms = await _context.Room.ToListAsync();
+            var list = await _context.Room.ToListAsync();
+            var rooms = new List<RoomDTO>();
+
+            foreach (var room in list)
+                rooms.Add(await GetRoom(room.Id));
+
             return rooms;
         }
 
@@ -62,17 +78,22 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of room</param>
         /// <returns>Task of completion</returns>
-        public async Task<Room> GetRoom(int id)
+        public async Task<RoomDTO> GetRoom(int id)
         {
-            Room room = await _context.Room.FindAsync(id);
+            var room = await _context.Room.Where(x => x.Id == id)
+                                     .Include(ra => ra.RoomAmenities)
+                                     .ThenInclude(a => a.Amenity)
+                                     .FirstOrDefaultAsync();
 
-            // include all of the amenities that the room has
-            var amenity = await _context.RoomAmenity.Where(x => x.RoomId == id)
-                .Include(x => x.Amenity)
-                .ToListAsync();
+            RoomDTO dto = new RoomDTO()
+            {
+                Id = room.Id,
+                RoomType = room.Name,
+                LayoutType = room.Layout,
+                RoomAmenities = room.RoomAmenities
+            };
 
-            room.RoomAmenities = amenity;
-            return room;
+            return dto;
         }
 
         /// <summary>

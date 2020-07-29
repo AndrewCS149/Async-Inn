@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Models.Services
 {
@@ -26,11 +27,16 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="amenity">The amenity to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<Amenities> Create(Amenities amenity)
+        public async Task<AmenityDTO> Create(AmenityDTO amenity)
         {
-            _context.Entry(amenity).State = EntityState.Added;
-            await _context.SaveChangesAsync();
 
+            Amenities entity = new Amenities()
+            {
+                Name = amenity.Name
+            };
+
+            _context.Entry(entity).State = EntityState.Added;
+            await _context.SaveChangesAsync();
             return amenity;
         }
 
@@ -38,9 +44,14 @@ namespace AsyncInn.Models.Services
         /// Returns all amenities
         /// </summary>
         /// <returns>Task of completion</returns>
-        public async Task<List<Amenities>> GetAllAmenities()
+        public async Task<List<AmenityDTO>> GetAllAmenities()
         {
-            var amenities = await _context.Amenities.ToListAsync();
+            var list = await _context.Amenities.ToListAsync();
+            var amenities = new List<AmenityDTO>();
+
+            foreach (var item in list)
+                amenities.Add(await GetAmenity(item.Id));
+
             return amenities;
         }
 
@@ -49,15 +60,17 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of amenity</param>
         /// <returns>Task of completion</returns>
-        public async Task<Amenities> GetAmenity(int id)
+        public async Task<AmenityDTO> GetAmenity(int id)
         {
             Amenities amenity = await _context.Amenities.FindAsync(id);
-            var roomAmenities = await _context.RoomAmenity.Where(x => x.AmenitiesId == id)
-                .Include(x => x.Room)
-                .ToListAsync();
 
-            amenity.RoomAmenities = roomAmenities;
-            return amenity;
+            AmenityDTO dto = new AmenityDTO()
+            {
+                Id = amenity.Id,
+                Name = amenity.Name
+            };
+
+            return dto;
         }
 
         /// <summary>
@@ -79,7 +92,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            Amenities amenity = await GetAmenity(id);
+            var amenity = await GetAmenity(id);
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AsyncInn.Models
+namespace AsyncInn.Models.DTOs
 {
-    public class Amenities
+    public class AmenityDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        // nav prop
-        public ICollection<RoomAmenities> RoomAmenities { get; set; }
     }
 }

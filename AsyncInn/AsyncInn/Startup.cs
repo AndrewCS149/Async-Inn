@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AsyncInn.Data;
+using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using AsyncInn.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +45,10 @@ namespace AsyncInn
                 // Connection string contains the location, username, pw of your sql server... with our sql db directly.
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AsyncInnDbContext>()
+                .AddDefaultTokenProviders();
 
             // register my dependency injection services
             services.AddTransient<IHotel, HotelRepo>();

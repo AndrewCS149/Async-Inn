@@ -5,6 +5,9 @@
 - Lab-11
 - Lab-12
 - Lab-13
+- Lab-14
+- Lab-15
+- Lab-17
 
 ---
 
@@ -64,6 +67,53 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ---
 
+### Routes 
+
+**AmenitiesController**
+- GetAmenity: `api/Amenities/{id}`
+- GetAmenities: `api/Amenities`
+- PutAmenities: `api/{id}`
+- PostAmenity: `api/Amenities`
+- DeleteAmenities: `api/Amenities/{id}`
+
+**HotelRoomController**
+- GetAllHotelRooms: `api/Hotels/Rooms`
+- GetHotelRoomDetails: `api/Hotels/{hotelId}/Rooms{roomNumber}/Details`
+- GetAllRoomsAtHotel: `api/Hotels/{hotelId}/Rooms`
+- GetHotelRoom: `api/Hotels/{hotelId}/Rooms/{roomNumber}`
+- PutHotelRoom: `api/Hotels/{hotelId}/Rooms/roomNumber}`
+- PostHotelRoom: `api/Hotels/{hotelId}/Rooms`
+- DeleteHotelRoom: `api/Hotels/{hotelId}/Rooms/{roomNum}`
+
+**HotelsController**
+- GetAllHotels: `api/Hotels/`
+- GetHotel: `api/Hotels/{hotelId}`
+- PutHotel: `api/Hotels/{hotelId}`
+- PostHotel: `api/Hotels`
+- DeleteHotel: `api/Hotels/{hotelId}`
+
+**RoomsController**
+- GetAllRooms: `api/Rooms`
+- GetRoom: `api/Rooms/{roomId}`
+- PutRoom: `api/Rooms/{roomId}`
+- PostRoom: `api/Rooms`
+- AddAmenityToRoom: `api/Rooms/{roomId}/Amenity/{amenityId}`
+- RemoveAmenityFromRoom: `api/Rooms/{roomId}/Amenity/{amenityid}`
+- DeleteRoom: `api/Rooms/{roomId}`
+
+**AccountController**
+- Register: `api/Account/Register`
+- Login: `api/Account/Login`
+
+---
+
+### ASP.NET Core Identity
+
+ASP.NET Core Identity is a package within ASP.Net Core that allows for managing users, 
+creating passwords, user authentication and more.
+
+---
+
 ### Languages / Tools
 
 - C#
@@ -74,6 +124,13 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ### Change Log
 
+- 1.17 Add AppUser controller and add routes - 28 Jul 2020
+- 1.16 Add UserApp class - 28 Jul 2020
+- 1.15 Modify all hotel methods into DTO - 27 Jul 2020
+- 1.14 Modify all hotelRoom methods into DTO - 27 Jul 2020
+- 1.13 Modify all room methods into DTO - 27 Jul 2020
+- 1.12 Modify all amenities methods into DTO - 27 Jul 2020
+- 1.11 AmenitiesExists() - 27 Jul 2020
 - 1.10 Add IHotelRoom interface - 23 Jul 2020
 - 1.9 Add HotelRoom repo file - 23 Jul 2020
 - 1.8 Add RoomAmenities & HotelRoom models - 23 Jul 2020

@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AsyncInn.Models
+namespace AsyncInn.Models.DTOs
 {
-    public class Hotel
+    public class HotelDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string StreetAddress{ get; set; }
+        public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Phone { get; set; }
 
-        // Navigation Properties
+        // Navigation properties
         public ICollection<HotelRoom> HotelRoom { get; set; }
     }
 }

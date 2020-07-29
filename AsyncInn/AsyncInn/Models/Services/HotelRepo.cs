@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Models.Services
 {
@@ -16,6 +18,7 @@ namespace AsyncInn.Models.Services
         /// Constructor for HotelRepo
         /// </summary>
         /// <param name="context">Database context</param>
+        /// <param name="hotel">IHotel reference</param>
         public HotelRepo(AsyncInnDbContext context)
         {
             _context = context;
@@ -26,9 +29,19 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotel">The hotel to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<Hotel> Create(Hotel hotel)
+        public async Task<HotelDTO> Create(HotelDTO hotel)
         {
-            _context.Entry(hotel).State = EntityState.Added;
+            Hotel entity = new Hotel()
+            {
+                Id = hotel.Id,
+                Name = hotel.Name,
+                StreetAddress = hotel.StreetAddress,
+                City = hotel.City,
+                State = hotel.State,
+                Phone = hotel.Phone
+            };
+
+            _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
 
             return hotel;
@@ -38,9 +51,14 @@ namespace AsyncInn.Models.Services
         /// Returns all hotels
         /// </summary>
         /// <returns>Task of completion</returns>
-        public async Task<List<Hotel>> GetAllHotels()
+        public async Task<List<HotelDTO>> GetAllHotels()
         {
-            var hotels = await _context.Hotels.ToListAsync();
+            var list = await _context.Hotels.ToListAsync();
+            var hotels = new List<HotelDTO>();
+
+            foreach (var hotel in list)
+                hotels.Add(await GetHotel(hotel.Id));
+
             return hotels;
         }
 
@@ -49,10 +67,21 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="id">Unique identifier of hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task<Hotel> GetHotel(int id)
+        public async Task<HotelDTO> GetHotel(int id)
         {
             Hotel hotel = await _context.Hotels.FindAsync(id);
-            return hotel;
+
+            HotelDTO dto = new HotelDTO()
+            {
+                Id = hotel.Id,
+                Name = hotel.Name,
+                StreetAddress = hotel.StreetAddress,
+                City = hotel.City,
+                State = hotel.State,
+                Phone = hotel.Phone
+            };
+
+            return dto;
         }
 
         /// <summary>
@@ -74,8 +103,8 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            Hotel hotel = await GetHotel(id);
-            _context.Entry(hotel).State = EntityState.Deleted;
+            var result = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == id);
+            _context.Entry(result).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
     }

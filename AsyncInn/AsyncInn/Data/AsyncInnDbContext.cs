@@ -1,4 +1,5 @@
 ﻿using AsyncInn.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.Emit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -6,11 +7,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace AsyncInn.Data
 {
-    public class AsyncInnDbContext : DbContext
+    public class AsyncInnDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Room { get; set; }
@@ -23,14 +25,17 @@ namespace AsyncInn.Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuiler)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuiler.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
+            // need to get the original behavior for our model override
+            base.OnModelCreating(modelBuilder);
 
-            modelBuiler.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId});
+            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelId, x.RoomNumber });
+
+            modelBuilder.Entity<RoomAmenities>().HasKey(x => new { x.RoomId, x.AmenitiesId });
 
             // seed hotelRoom data
-            modelBuiler.Entity<HotelRoom>().HasData(
+            modelBuilder.Entity<HotelRoom>().HasData(
                 new HotelRoom
                 {
                     HotelId = 1,
@@ -38,12 +43,29 @@ namespace AsyncInn.Data
                     RoomNumber = 1,
                     Rate = 75.00M,
                     PetFriendly = true
-                }
+                },
 
+                new HotelRoom
+                {
+                    HotelId = 1,
+                    RoomId = 2,
+                    RoomNumber = 2,
+                    Rate = 125.00M,
+                    PetFriendly = false
+                },
+
+                new HotelRoom
+                {
+                    HotelId = 1,
+                    RoomId = 3,
+                    RoomNumber = 3,
+                    Rate = 100.00M,
+                    PetFriendly = true
+                }
             );
 
             // seed hotel data
-            modelBuiler.Entity<Hotel>().HasData(
+            modelBuilder.Entity<Hotel>().HasData(
                 new Hotel
                 {
                     Id = 1,
@@ -74,12 +96,12 @@ namespace AsyncInn.Data
             );
 
             // seed room data
-            modelBuiler.Entity<Room>().HasData(
+            modelBuilder.Entity<Room>().HasData(
                 new Room
                 {
                     Id = 1,
                     Name = "Relax",
-                    Layout = 2
+                    Layout = 1
                 },
                 new Room
                 {
@@ -91,12 +113,12 @@ namespace AsyncInn.Data
                 {
                     Id = 3,
                     Name = "Sooth",
-                    Layout = 0
+                    Layout = 2
                 }
             );
 
             // seed amenities data
-            modelBuiler.Entity<Amenities>().HasData(
+            modelBuilder.Entity<Amenities>().HasData(
                 new Amenities
                 {
                     Id = 1,
@@ -113,8 +135,6 @@ namespace AsyncInn.Data
                     Name = "Minibar"
                 }
             );
-
-
         }
     }
 }

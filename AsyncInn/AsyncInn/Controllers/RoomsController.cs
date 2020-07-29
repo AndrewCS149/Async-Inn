@@ -9,6 +9,7 @@ using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using System.Runtime.InteropServices.WindowsRuntime;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Controllers
 {
@@ -23,18 +24,25 @@ namespace AsyncInn.Controllers
             _room = room;
         }
 
+        // Gets all room types
         // GET: api/Rooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetAllRooms()
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetAllRooms()
         {
             return await _room.GetAllRooms();
         }
 
+        // gets a specified room type
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
-            return await _room.GetRoom(id);
+            var room = await _room.GetRoom(id);
+
+            if (room == null)
+                return NotFound();
+
+            return room;
         }
 
         // PUT: api/Rooms/5
@@ -44,19 +52,18 @@ namespace AsyncInn.Controllers
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
             if (id != room.Id)
-            {
                 return BadRequest();
-            }
 
-            var updatedRoom = await _room.Update(room);
-            return Ok(updatedRoom);
+            await _room.Update(room);
+
+            return NoContent();
         }
 
         // POST: api/Rooms
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
+        public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.Create(room);
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);

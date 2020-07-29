@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsyncInn.Models.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,20 +13,20 @@ namespace AsyncInn.Models.Interfaces
         /// </summary>
         /// <param name="hotel">The hotel to create</param>
         /// <returns>Task of completion</returns>
-        Task<Hotel> Create(Hotel hotel);
+        Task<HotelDTO> Create(HotelDTO hotel);
 
         /// <summary>
         /// Returns all hotels
         /// </summary>
         /// <returns>Task of completion</returns>
-        Task<List<Hotel>> GetAllHotels();
+        Task<List<HotelDTO>> GetAllHotels();
 
         /// <summary>
         /// Returns a specified hotel
         /// </summary>
         /// <param name="id">Unique identifier of hotel</param>
         /// <returns>Task of completion</returns>
-        Task<Hotel> GetHotel(int id);
+        Task<HotelDTO> GetHotel(int id);
 
         /// <summary>
         /// Updates a hotel

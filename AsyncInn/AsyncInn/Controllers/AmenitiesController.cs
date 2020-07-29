@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
+using AsyncInn.Models.DTOs;
 
 namespace AsyncInn.Controllers
 {
@@ -22,20 +23,27 @@ namespace AsyncInn.Controllers
             _amenity = amenity;
         }
 
+        // GET: api/Amenities/4
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
+        {
+            var amenities = await _amenity.GetAmenity(id);
+
+            if (amenities == null)
+                return NotFound();
+
+            return amenities;
+        }
+
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenities>>> GetAllAmenities()
+        public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
             return await _amenity.GetAllAmenities();
-        }
+        }      
 
-        // GET: api/Amenities/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Amenities>> GetAmenity(int id)
-        {
-            return await _amenity.GetAmenity(id);
-        }
-
+        // TODO: How do I run this in postman?
         // PUT: api/Amenities/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -43,23 +51,21 @@ namespace AsyncInn.Controllers
         public async Task<IActionResult> PutAmenities(int id, Amenities amenities)
         {
             if (id != amenities.Id)
-            {
                 return BadRequest();
-            }
-            var updatedAmenity = await _amenity.Update(amenities);
-            return Ok(updatedAmenity);
+
+            await _amenity.Update(amenities);
+            return NoContent();
         }
 
         // POST: api/Amenities
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
+        public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
         {
-            await _amenity.Create(amenities);
-            return CreatedAtAction("GetAmenities", new { id = amenities.Id }, amenities);
+            await _amenity.Create(amenity);
+            return CreatedAtAction("GetAmenities", new { id = amenity.Id }, amenity);
         }
 
+        // TODO: Is this working?
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
@@ -67,6 +73,5 @@ namespace AsyncInn.Controllers
             await _amenity.Delete(id);
             return NoContent();
         }
-
     }
 }
