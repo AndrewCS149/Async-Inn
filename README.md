@@ -104,9 +104,10 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ---
 
-### Identities
+### ASP.NET Core Identity
 
-
+ASP.NET Core Identity is a package within ASP.Net Core that allows for managing users, 
+creating passwords, user authentication and more.
 
 ---
 
@@ -120,6 +121,11 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ### Change Log
 
+- 1.17 Add AppUser controller and add routes - 28 Jul 2020
+- 1.16 Add UserApp class - 28 Jul 2020
+- 1.15 Modify all hotel methods into DTO - 27 Jul 2020
+- 1.14 Modify all hotelRoom methods into DTO - 27 Jul 2020
+- 1.13 Modify all room methods into DTO - 27 Jul 2020
 - 1.12 Modify all amenities methods into DTO - 27 Jul 2020
 - 1.11 AmenitiesExists() - 27 Jul 2020
 - 1.10 Add IHotelRoom interface - 23 Jul 2020
