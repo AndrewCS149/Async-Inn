@@ -61,6 +61,7 @@ namespace AsyncInn.Models.Services
             return hotelRooms;
         }
 
+        // TODO: not grabbing the amenities
         /// <summary>
         /// Retrieves the hotel room details of a specified room
         /// </summary>

@@ -64,6 +64,52 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ---
 
+### Routes 
+
+**AmenitiesController**
+- GetAmenity: `api/Amenities/{id}`
+- GetAmenities: `api/Amenities`
+- PutAmenities: `api/{id}`
+- PostAmenity: `api/Amenities`
+- DeleteAmenities: `api/Amenities/{id}`
+
+**HotelRoomController**
+- GetAllHotelRooms: `api/Hotels/Rooms`
+- GetHotelRoomDetails: `api/Hotels/{hotelId}/Rooms{roomNumber}/Details`
+- GetAllRoomsAtHotel: `api/Hotels/{hotelId}/Rooms`
+- GetHotelRoom: `api/Hotels/{hotelId}/Rooms/{roomNumber}`
+- PutHotelRoom: `api/Hotels/{hotelId}/Rooms/roomNumber}`
+- PostHotelRoom: `api/Hotels/{hotelId}/Rooms`
+- DeleteHotelRoom: `api/Hotels/{hotelId}/Rooms/{roomNum}`
+
+**HotelsController**
+- GetAllHotels: `api/Hotels/`
+- GetHotel: `api/Hotels/{hotelId}`
+- PutHotel: `api/Hotels/{hotelId}`
+- PostHotel: `api/Hotels`
+- DeleteHotel: `api/Hotels/{hotelId}`
+
+**RoomsController**
+- GetAllRooms: `api/Rooms`
+- GetRoom: `api/Rooms/{roomId}`
+- PutRoom: `api/Rooms/{roomId}`
+- PostRoom: `api/Rooms`
+- AddAmenityToRoom: `api/Rooms/{roomId}/Amenity/{amenityId}`
+- RemoveAmenityFromRoom: `api/Rooms/{roomId}/Amenity/{amenityid}`
+- DeleteRoom: `api/Rooms/{roomId}`
+
+**AccountController**
+- Register: `api/Account/Register`
+- Login: `api/Account/Login`
+
+---
+
+### Identities
+
+
+
+---
+
 ### Languages / Tools
 
 - C#

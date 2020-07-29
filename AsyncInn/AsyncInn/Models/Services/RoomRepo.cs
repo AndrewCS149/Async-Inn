@@ -80,13 +80,17 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<RoomDTO> GetRoom(int id)
         {
-            Room room = await _context.Room.FindAsync(id);
+            var room = await _context.Room.Where(x => x.Id == id)
+                                     .Include(ra => ra.RoomAmenities)
+                                     .ThenInclude(a => a.Amenity)
+                                     .FirstOrDefaultAsync();
 
             RoomDTO dto = new RoomDTO()
             {
                 Id = room.Id,
                 RoomType = room.Name,
-                LayoutType = room.Layout
+                LayoutType = room.Layout,
+                RoomAmenities = room.RoomAmenities
             };
 
             return dto;

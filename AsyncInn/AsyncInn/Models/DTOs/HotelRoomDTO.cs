@@ -15,5 +15,6 @@ namespace AsyncInn.Models.DTOs
 
         // Navigation properties
         public Room Room { get; set; }
+        //public ICollection<RoomAmenities> RoomAmenities { get; set; }
     }
 }
