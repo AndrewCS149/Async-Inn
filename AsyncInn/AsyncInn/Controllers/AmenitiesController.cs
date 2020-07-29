@@ -65,7 +65,7 @@ namespace AsyncInn.Controllers
             return CreatedAtAction("GetAmenities", new { id = amenity.Id }, amenity);
         }
 
-        // TODO: not working!!
+        // TODO: Is this working?
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Amenities>> DeleteAmenities(int id)

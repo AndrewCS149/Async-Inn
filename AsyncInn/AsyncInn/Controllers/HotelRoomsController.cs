@@ -93,7 +93,7 @@ namespace AsyncInn.Controllers
 
         // DELETE: api/HotelRooms/5
         [HttpDelete]
-        [Route("{hotelId}/Rooms/{roomNumber}")]
+        [Route("{hotelId}/Rooms/{roomNum}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomNum, int hotelId)
         {
             await _hotelRoom.Delete(roomNum, hotelId);

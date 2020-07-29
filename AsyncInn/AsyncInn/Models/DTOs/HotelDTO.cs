@@ -13,5 +13,8 @@ namespace AsyncInn.Models.DTOs
         public string City { get; set; }
         public string State { get; set; }
         public string Phone { get; set; }
+
+        // Navigation properties
+        public ICollection<HotelRoom> HotelRoom { get; set; }
     }
 }

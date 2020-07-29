@@ -60,7 +60,7 @@ namespace AsyncInn.Controllers
             if (result.Succeeded)
                 return Ok("Logged in");
 
-            return BadRequest("Invalid Password");
+            return BadRequest("Username or password incorrect");
         }
     }
 }

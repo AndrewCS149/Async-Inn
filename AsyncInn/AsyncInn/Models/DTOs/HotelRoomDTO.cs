@@ -12,5 +12,8 @@ namespace AsyncInn.Models.DTOs
         public int RoomNumber { get; set; }
         public decimal DailyRate { get; set; }
         public bool PetFriendly { get; set; }
+
+        // Navigation properties
+        public Room Room { get; set; }
     }
 }

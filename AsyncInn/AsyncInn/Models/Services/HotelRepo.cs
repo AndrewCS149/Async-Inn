@@ -35,6 +35,7 @@ namespace AsyncInn.Models.Services
             {
                 Id = hotel.Id,
                 Name = hotel.Name,
+                StreetAddress = hotel.StreetAddress,
                 City = hotel.City,
                 State = hotel.State,
                 Phone = hotel.Phone
@@ -74,6 +75,7 @@ namespace AsyncInn.Models.Services
             {
                 Id = hotel.Id,
                 Name = hotel.Name,
+                StreetAddress = hotel.StreetAddress,
                 City = hotel.City,
                 State = hotel.State,
                 Phone = hotel.Phone

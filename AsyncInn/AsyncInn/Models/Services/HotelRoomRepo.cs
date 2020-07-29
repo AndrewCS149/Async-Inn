@@ -82,7 +82,8 @@ namespace AsyncInn.Models.Services
                 RoomId = room.RoomId,
                 RoomNumber = room.RoomNumber,
                 DailyRate = room.Rate,
-                PetFriendly = room.PetFriendly
+                PetFriendly = room.PetFriendly,
+                Room = room.Room
             };
 
             return dto;
@@ -96,7 +97,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<HotelRoomDTO> GetHotelRoom(int roomNum, int hotelId)
         {
-            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(hotelId, roomNum);
+            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
 
             HotelRoomDTO dto = new HotelRoomDTO()
             {
