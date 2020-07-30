@@ -33,7 +33,7 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom)
+        public async Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom, int hotelId)
         {
             HotelRoom entity = new HotelRoom()
             {
@@ -98,7 +98,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<List<HotelRoomDTO>> GetAllRoomsAtHotel(int hotelId)
         {
-            var list = await _context.HotelRoom.ToListAsync();
+            var list = await _context.HotelRoom.Where(x => x.HotelId == hotelId).ToListAsync();
             var hotelRooms = new List<HotelRoomDTO>();
 
             foreach (var room in list)
@@ -145,7 +145,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int roomNum, int hotelId)
         {
-            var hotelRoom = await GetHotelRoom(roomNum, hotelId);
+            var hotelRoom = await _context.HotelRoom.FindAsync(hotelId, roomNum);
             _context.Entry(hotelRoom).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

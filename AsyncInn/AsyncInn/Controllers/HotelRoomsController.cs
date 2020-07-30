@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
-    [Route("api/{Hotels}")]
+    [Route("api/Hotels")]
+    //[Route("api/HotelInfo")]
     [Authorize]
     [ApiController]
     public class HotelRoomsController : ControllerBase
@@ -61,34 +62,27 @@ namespace AsyncInn.Controllers
         public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
         {
             if (hotelId != hotelRoom.HotelId || roomNumber != hotelRoom.RoomNumber)
-            {
                 return BadRequest();
-            }
 
             await _hotelRoom.Update(hotelRoom);
             return NoContent();
         }
 
-        // POST: api/HotelRooms
+        // POST: api/Hotels/1
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPost]
-        //[Route("/{hotelId}")]
-        //public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom, int hotelId)
-        //{
-        //    await _hotelRoom.Create(hotelRoom, hotelId);
-        //    return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelId }, hotelRoom);
-        //}
-
         [HttpPost]
-        [Route("/{hotelId}")]
-        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom)
+        [Route("{hotelId}")]
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom, int hotelId)
         {
-            await _hotelRoom.Create(hotelRoom);
+            if (hotelId != hotelRoom.HotelId)
+                return BadRequest();
+
+            await _hotelRoom.Create(hotelRoom, hotelId);
             return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelId }, hotelRoom);
         }
 
-        // DELETE: api/HotelRooms/5
+        // DELETE: api/Hotels/5
         [HttpDelete]
         [Route("{hotelId}/Rooms/{roomNum}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomNum, int hotelId)

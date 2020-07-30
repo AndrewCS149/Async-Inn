@@ -20,7 +20,6 @@ namespace AsyncInn.Controllers
     {
         private readonly IHotel _hotel;
 
-        // our constructor is bringing in a reference to our db
         public HotelsController(IHotel hotel)
         {
             _hotel = hotel;

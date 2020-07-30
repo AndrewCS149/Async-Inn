@@ -36,7 +36,7 @@ namespace AsyncInn.Models.Services
             Room entity = new Room()
             {
                 Name = room.Name,
-                Layout = room.Layout
+                Layout = (Layout)Enum.Parse(typeof(Layout), room.Layout)
             };
 
             _context.Entry(entity).State = EntityState.Added;
@@ -88,7 +88,7 @@ namespace AsyncInn.Models.Services
             {
                 Id = room.Id,
                 Name = room.Name,
-                Layout = room.Layout
+                Layout = room.Layout.ToString()
             };
 
             dto.RoomAmenities = new List<AmenityDTO>();
