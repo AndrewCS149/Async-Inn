@@ -111,13 +111,6 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to update</param>
         /// <returns>Task of completion</returns>
-        //public async Task<HotelRoom> Update(HotelRoom hotelRoom)
-        //{
-        //    _context.Entry(hotelRoom).State = EntityState.Modified;
-        //    await _context.SaveChangesAsync();
-        //    return hotelRoom;
-        //}
-
         public async Task<HotelRoomDTO> Update(HotelRoom hotelRoom)
         {
             _context.Entry(hotelRoom).State = EntityState.Modified;
