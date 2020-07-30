@@ -18,7 +18,6 @@ namespace AsyncInn.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AccountController : ControllerBase
     {
         private IConfiguration _config;
@@ -54,8 +53,6 @@ namespace AsyncInn.Controllers
 
                 if (user.Email == _config["ManagerSeed"])
                     await _userManager.AddToRoleAsync(user, AppRoles.Manager);
-                else
-                    await _userManager.AddToRoleAsync(user, register.Role);
 
                 // sign the user in if it was successful
                 await _signInManager.SignInAsync(user, false);

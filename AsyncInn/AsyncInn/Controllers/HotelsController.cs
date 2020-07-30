@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelsController : ControllerBase
