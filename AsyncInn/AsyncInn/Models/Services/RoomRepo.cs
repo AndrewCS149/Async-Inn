@@ -35,10 +35,9 @@ namespace AsyncInn.Models.Services
         {
             Room entity = new Room()
             {
-                Name = room.RoomType,
-                Layout = room.LayoutType
+                Name = room.Name,
+                Layout = room.Layout
             };
-
 
             _context.Entry(entity).State = EntityState.Added;
             await _context.SaveChangesAsync();
@@ -53,7 +52,7 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion/returns>
         public async Task Delete(int id)
         {
-            var room= await GetRoom(id);
+            var room = await GetRoom(id);
             _context.Entry(room).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
@@ -88,8 +87,8 @@ namespace AsyncInn.Models.Services
             RoomDTO dto = new RoomDTO()
             {
                 Id = room.Id,
-                RoomType = room.Name,
-                LayoutType = room.Layout
+                Name = room.Name,
+                Layout = room.Layout
             };
 
             dto.RoomAmenities = new List<AmenityDTO>();

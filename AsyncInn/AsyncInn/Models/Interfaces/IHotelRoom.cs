@@ -42,7 +42,8 @@ namespace AsyncInn.Models.Interfaces
         /// </summary>
         /// <param name="hotelRoom">The hotel room to update</param>
         /// <returns>Task of completion</returns>
-        Task<HotelRoom> Update(HotelRoom hotelRoom);
+        //Task<HotelRoom> Update(HotelRoom hotelRoom);
+        Task<HotelRoomDTO> Update(HotelRoom hotelRoom);
 
         /// <summary>
         /// Adds a room to a hotel

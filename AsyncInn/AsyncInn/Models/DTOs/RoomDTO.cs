@@ -8,8 +8,8 @@ namespace AsyncInn.Models.DTOs
     public class RoomDTO
     {
         public int Id { get; set; }
-        public string RoomType { get; set; }
-        public Layout LayoutType { get; set; }
+        public string Name { get; set; }
+        public Layout Layout { get; set; }
 
         // Navigation properties
         //public ICollection<RoomAmenities> RoomAmenities { get; set; }

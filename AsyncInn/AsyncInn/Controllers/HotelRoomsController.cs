@@ -56,6 +56,19 @@ namespace AsyncInn.Controllers
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        //[HttpPut]
+        //[Route("{hotelId}/Rooms/{roomNumber}")]
+        //public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
+        //{
+        //    if (hotelId != hotelRoom.HotelId || roomNumber != hotelRoom.RoomNumber)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    await _hotelRoom.Update(hotelRoom);
+        //    return NoContent();
+        //}
+
         [HttpPut]
         [Route("{hotelId}/Rooms/{roomNumber}")]
         public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)

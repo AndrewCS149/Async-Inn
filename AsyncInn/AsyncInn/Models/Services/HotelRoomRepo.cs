@@ -39,7 +39,7 @@ namespace AsyncInn.Models.Services
                 HotelId = hotelRoom.HotelId,
                 RoomId = hotelRoom.RoomId,
                 RoomNumber = hotelRoom.RoomNumber,
-                Rate = hotelRoom.DailyRate,
+                Rate = hotelRoom.Rate,
                 PetFriendly = hotelRoom.PetFriendly
             };
 
@@ -82,7 +82,7 @@ namespace AsyncInn.Models.Services
                 HotelId = hotelRoom.HotelId,
                 RoomId = hotelRoom.RoomId,
                 RoomNumber = hotelRoom.RoomNumber,
-                DailyRate = hotelRoom.Rate,
+                Rate = hotelRoom.Rate,
                 PetFriendly = hotelRoom.PetFriendly,
                 Room = roomDTO
             };
@@ -111,11 +111,19 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to update</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoom> Update(HotelRoom hotelRoom)
+        //public async Task<HotelRoom> Update(HotelRoom hotelRoom)
+        //{
+        //    _context.Entry(hotelRoom).State = EntityState.Modified;
+        //    await _context.SaveChangesAsync();
+        //    return hotelRoom;
+        //}
+
+        public async Task<HotelRoomDTO> Update(HotelRoom hotelRoom)
         {
             _context.Entry(hotelRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return hotelRoom;
+            var hotelRoomDTO = await GetHotelRoom(hotelRoom.HotelId, hotelRoom.RoomNumber);
+            return hotelRoomDTO;
         }
 
         /// <summary>
