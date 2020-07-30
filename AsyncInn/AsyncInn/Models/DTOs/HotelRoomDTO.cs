@@ -14,7 +14,8 @@ namespace AsyncInn.Models.DTOs
         public bool PetFriendly { get; set; }
 
         // Navigation properties
-        public Room Room { get; set; }
+        public RoomDTO Room { get; set; }
         //public ICollection<RoomAmenities> RoomAmenities { get; set; }
+        // TODO: delete
     }
 }

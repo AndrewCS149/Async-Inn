@@ -101,19 +101,19 @@ namespace AsyncInn.Data
                 {
                     Id = 1,
                     Name = "Relax",
-                    Layout = 1
+                    Layout = Layout.OneBedSuite
                 },
                 new Room
                 {
                     Id = 2,
                     Name = "Vibrant",
-                    Layout = 1
+                    Layout = Layout.Studio
                 },
                 new Room
                 {
                     Id = 3,
                     Name = "Sooth",
-                    Layout = 2
+                    Layout = Layout.TwoBedSuite
                 }
             );
 

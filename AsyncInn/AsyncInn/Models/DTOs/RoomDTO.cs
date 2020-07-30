@@ -9,9 +9,10 @@ namespace AsyncInn.Models.DTOs
     {
         public int Id { get; set; }
         public string RoomType { get; set; }
-        public int LayoutType { get; set; }
+        public Layout LayoutType { get; set; }
 
         // Navigation properties
-        public ICollection<RoomAmenities> RoomAmenities { get; set; }
+        //public ICollection<RoomAmenities> RoomAmenities { get; set; }
+        public List<AmenityDTO> RoomAmenities { get; set; }
     }
 }

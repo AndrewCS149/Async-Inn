@@ -7,21 +7,24 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using AsyncInn.Models.DTOs;
+using AsyncInn.Migrations;
 
 namespace AsyncInn.Models.Services
 {
     public class HotelRoomRepo : IHotelRoom
     {
         private AsyncInnDbContext _context;
+        private IRoom _room;
 
         /// <summary>
         /// Constructor for HotelRoomRepo
         /// </summary>
         /// <param name="context">Database context</param>
         /// <param name="hotelRoom">IHotelRoom reference</param>
-        public HotelRoomRepo(AsyncInnDbContext context)
+        public HotelRoomRepo(AsyncInnDbContext context, IRoom room)
         {
             _context = context;
+            _room = room;
         }
 
         /// <summary>
@@ -61,7 +64,6 @@ namespace AsyncInn.Models.Services
             return hotelRooms;
         }
 
-        // TODO: not grabbing the amenities
         /// <summary>
         /// Retrieves the hotel room details of a specified room
         /// </summary>
@@ -70,26 +72,25 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<HotelRoomDTO> GetHotelRoomDetails(int hotelId, int roomNum)
         {
-            var room = await _context.HotelRoom.Where(h => h.HotelId == hotelId && h.RoomNumber == roomNum)
-                                               .Include(h => h.Hotel)
-                                               .Include(r => r.Room)
-                                               .ThenInclude(ra => ra.RoomAmenities)
-                                               .ThenInclude(a => a.Amenity)
-                                               .FirstOrDefaultAsync();
+            var hotelRoom = await _context.HotelRoom.Where(h => h.HotelId == hotelId && h.RoomNumber == roomNum)
+                                                    .FirstOrDefaultAsync();
+
+            var roomDTO = await _room.GetRoom(hotelRoom.RoomId);
 
             HotelRoomDTO dto = new HotelRoomDTO()
             {
-                HotelId = room.HotelId,
-                RoomId = room.RoomId,
-                RoomNumber = room.RoomNumber,
-                DailyRate = room.Rate,
-                PetFriendly = room.PetFriendly,
-                Room = room.Room
+                HotelId = hotelRoom.HotelId,
+                RoomId = hotelRoom.RoomId,
+                RoomNumber = hotelRoom.RoomNumber,
+                DailyRate = hotelRoom.Rate,
+                PetFriendly = hotelRoom.PetFriendly,
+                Room = roomDTO
             };
 
             return dto;
         }
 
+        // TODO: delete
         /// <summary>
         /// Returns a specified hotel room
         /// </summary>

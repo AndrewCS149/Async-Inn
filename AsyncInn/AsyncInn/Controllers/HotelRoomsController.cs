@@ -35,9 +35,9 @@ namespace AsyncInn.Controllers
         }
 
         // gets all details of a specified hotel room
-        // GET: api/Hotels/1/Rooms/2/Details
+        // GET: api/Hotels/1/Rooms/2
         [HttpGet]
-        [Route("{hotelId}/Rooms/{roomNum}/Details")]
+        [Route("{hotelId}/Rooms/{roomNum}")]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoomDetails(int hotelId, int roomNum)
         {
             return await _hotelRoom.GetHotelRoomDetails(hotelId, roomNum);
@@ -55,17 +55,17 @@ namespace AsyncInn.Controllers
 
         // gets a specified room at a specified hotel
         // GET: api/HotelRooms/5
-        [HttpGet("{id}")]
-        [Route("{hotelId}/Rooms/{roomNum}")]
-        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int roomNum, int hotelId)
-        {
-            var hotelRoom = await _hotelRoom.GetHotelRoom(roomNum, hotelId);
+        //[HttpGet("{id}")]
+        //[Route("{hotelId}/Rooms/{roomNum}")]
+        //public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int roomNum, int hotelId)
+        //{
+        //    var hotelRoom = await _hotelRoom.GetHotelRoom(roomNum, hotelId);
 
-            if (hotelRoom == null)
-                return NotFound();
+        //    if (hotelRoom == null)
+        //        return NotFound();
 
-            return hotelRoom;
-        }
+        //    return hotelRoom;
+        //}
 
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

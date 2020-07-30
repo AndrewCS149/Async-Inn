@@ -89,9 +89,14 @@ namespace AsyncInn.Models.Services
             {
                 Id = room.Id,
                 RoomType = room.Name,
-                LayoutType = room.Layout,
-                RoomAmenities = room.RoomAmenities
+                LayoutType = room.Layout
             };
+
+            dto.RoomAmenities = new List<AmenityDTO>();
+            foreach (var amenity in room.RoomAmenities)
+            {
+                dto.RoomAmenities.Add(await _amenities.GetAmenity(amenity.AmenitiesId));
+            }
 
             return dto;
         }
