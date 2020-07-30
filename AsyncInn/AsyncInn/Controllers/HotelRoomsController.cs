@@ -9,10 +9,12 @@ using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using AsyncInn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
     [Route("api/{Hotels}")]
+    [Authorize]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -43,6 +45,7 @@ namespace AsyncInn.Controllers
 
         // gets all the rooms at a specified hotel
         // GET: api/Hotels/1/Rooms
+        [AllowAnonymous]
         [HttpGet]
         [Route("{hotelId}/Rooms")]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetAllRoomsAtHotel(int hotelId)

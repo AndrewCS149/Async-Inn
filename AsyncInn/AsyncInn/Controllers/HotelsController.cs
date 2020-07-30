@@ -10,9 +10,11 @@ using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using AsyncInn.Models.DTOs;
 using SQLitePCL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelsController : ControllerBase
@@ -26,6 +28,7 @@ namespace AsyncInn.Controllers
         }
 
         // GET: api/Hotels
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelDTO>>> GetAllHotels()
         {

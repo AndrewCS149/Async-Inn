@@ -57,8 +57,11 @@ namespace AsyncInn.Models.Services
             var hotels = new List<HotelDTO>();
 
             foreach (var hotel in list)
+            {
                 hotels.Add(await GetHotel(hotel.Id));
+            }
 
+            
             return hotels;
         }
 
@@ -70,6 +73,7 @@ namespace AsyncInn.Models.Services
         public async Task<HotelDTO> GetHotel(int id)
         {
             Hotel hotel = await _context.Hotels.FindAsync(id);
+            //var hotelRooms = await _context.Hotels.Where(h => h.Id == id).Include(hr => hr.HotelRoom).ToListAsync();
 
             HotelDTO dto = new HotelDTO()
             {
@@ -80,6 +84,8 @@ namespace AsyncInn.Models.Services
                 State = hotel.State,
                 Phone = hotel.Phone
             };
+
+            //dto.HotelRoom = hotelRooms;
 
             return dto;
         }

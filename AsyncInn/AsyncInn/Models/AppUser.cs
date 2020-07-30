@@ -11,4 +11,12 @@ namespace AsyncInn.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
+
+    public static class AppRoles
+    {
+        public const string Manager = "Manager";
+        public const string Customer = "Customer";
+        //public const string Teacher = "Teacher";
+        //public const string 
+    }
 }
