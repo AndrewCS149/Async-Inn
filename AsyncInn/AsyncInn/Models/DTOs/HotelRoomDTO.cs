@@ -15,7 +15,5 @@ namespace AsyncInn.Models.DTOs
 
         // Navigation properties
         public RoomDTO Room { get; set; }
-        //public ICollection<RoomAmenities> RoomAmenities { get; set; }
-        // TODO: delete
     }
 }

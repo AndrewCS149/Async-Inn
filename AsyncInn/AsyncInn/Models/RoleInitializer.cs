@@ -12,7 +12,9 @@ namespace AsyncInn.Models
 {
     public class RoleInitializer
     {
-        // create a list of identity roles
+        /// <summary>
+        /// Create roles
+        /// </summary>
         private static readonly List<IdentityRole> Roles = new List<IdentityRole>()
         {
             new IdentityRole{Name = AppRoles.Manager, NormalizedName = AppRoles.Manager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
@@ -20,7 +22,12 @@ namespace AsyncInn.Models
              new IdentityRole{Name = AppRoles.Customer, NormalizedName = AppRoles.Customer.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
         };
 
-        // TODO: summary comment
+        /// <summary>
+        /// Seeds initial data into the database on startup
+        /// </summary>
+        /// <param name="serviceProvider">IServiceProvider</param>
+        /// <param name="users">App user</param>
+        /// <param name="_config">IConfiguration</param>
         public static void SeedData(IServiceProvider serviceProvider, UserManager<AppUser> users, IConfiguration _config)
         {
             using (var dbContext = new AsyncInnDbContext(serviceProvider.GetRequiredService<DbContextOptions<AsyncInnDbContext>>()))
@@ -31,7 +38,10 @@ namespace AsyncInn.Models
             }
         }
 
-        // TODO: summary comment
+        /// <summary>
+        /// Adds a role to a user
+        /// </summary>
+        /// <param name="context"></param>
         private static void AddRoles(AsyncInnDbContext context)
         {
             if (context.Roles.Any()) return;
@@ -43,9 +53,14 @@ namespace AsyncInn.Models
             }
         }
 
+        /// <summary>
+        /// Seeds app users into the database on startup
+        /// </summary>
+        /// <param name="userManager">UserManager with AppUser data type</param>
+        /// <param name="_config">IConfiguration</param>
         private static void SeedUsers(UserManager<AppUser> userManager, IConfiguration _config)
         {
-            if(userManager.FindByEmailAsync(_config["AdminEmail"]).Result == null)
+            if (userManager.FindByEmailAsync(_config["AdminEmail"]).Result == null)
             {
                 AppUser user = new AppUser();
                 user.UserName = _config["AdminEmail"];
