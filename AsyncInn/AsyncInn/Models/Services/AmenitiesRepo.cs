@@ -29,7 +29,6 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task<AmenityDTO> Create(AmenityDTO amenity)
         {
-
             Amenities entity = new Amenities()
             {
                 Name = amenity.Name
@@ -92,7 +91,8 @@ namespace AsyncInn.Models.Services
         /// <returns>Task of completion</returns>
         public async Task Delete(int id)
         {
-            var amenity = await GetAmenity(id);
+            var amenity = await _context.Amenities.FindAsync(id);
+
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

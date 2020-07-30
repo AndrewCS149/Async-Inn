@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using AsyncInn.Models.DTOs;
 using AsyncInn.Migrations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AsyncInn.Models.Services
 {
@@ -32,7 +33,7 @@ namespace AsyncInn.Models.Services
         /// </summary>
         /// <param name="hotelRoom">The hotel room to create</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom, int hotelId)
+        public async Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom)
         {
             HotelRoom entity = new HotelRoom()
             {
@@ -75,7 +76,7 @@ namespace AsyncInn.Models.Services
             var hotelRoom = await _context.HotelRoom.Where(h => h.HotelId == hotelId && h.RoomNumber == roomNum)
                                                     .FirstOrDefaultAsync();
 
-            var roomDTO = await _room.GetRoom(hotelRoom.RoomId);
+            RoomDTO roomDTO = await _room.GetRoom(hotelRoom.RoomId);
 
             HotelRoomDTO dto = new HotelRoomDTO()
             {

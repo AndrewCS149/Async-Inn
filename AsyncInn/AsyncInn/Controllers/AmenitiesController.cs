@@ -41,14 +41,13 @@ namespace AsyncInn.Controllers
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
             return await _amenity.GetAllAmenities();
-        }      
+        }
 
-        // TODO: How do I run this in postman?
         // PUT: api/Amenities/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenities(int id, Amenities amenities)
+        public async Task<IActionResult> PutAmenity(int id, Amenities amenities)
         {
             if (id != amenities.Id)
                 return BadRequest();
@@ -65,10 +64,9 @@ namespace AsyncInn.Controllers
             return CreatedAtAction("GetAmenities", new { id = amenity.Id }, amenity);
         }
 
-        // TODO: Is this working?
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
+        public async Task<ActionResult<Amenities>> DeleteAmenity(int id)
         {
             await _amenity.Delete(id);
             return NoContent();
