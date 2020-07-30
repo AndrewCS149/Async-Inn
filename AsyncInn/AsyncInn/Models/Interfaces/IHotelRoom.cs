@@ -28,7 +28,7 @@ namespace AsyncInn.Models.Interfaces
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <param name="roomNum">Unique identifier of a room</param>
         /// <returns>Task of completion</returns>
-        Task<HotelRoomDTO> GetHotelRoomDetails(int hotelId, int roomNum);
+        //Task<HotelRoomDTO> GetHotelRoomDetails(int hotelId, int roomNum);
 
         /// <summary>
         /// Returns all rooms at a specified hotel

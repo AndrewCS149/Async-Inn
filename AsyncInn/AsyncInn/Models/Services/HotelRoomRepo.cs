@@ -70,7 +70,7 @@ namespace AsyncInn.Models.Services
         /// <param name="roomNum">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoomDTO> GetHotelRoomDetails(int hotelId, int roomNum)
+        public async Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNum)
         {
             var hotelRoom = await _context.HotelRoom.Where(h => h.HotelId == hotelId && h.RoomNumber == roomNum)
                                                     .FirstOrDefaultAsync();
@@ -97,21 +97,21 @@ namespace AsyncInn.Models.Services
         /// <param name="roomNum">Unique identifier of a room</param>
         /// <param name="hotelId">Unique identifier of a hotel</param>
         /// <returns>Task of completion</returns>
-        public async Task<HotelRoomDTO> GetHotelRoom(int roomNum, int hotelId)
-        {
-            HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
+        //public async Task<HotelRoomDTO> GetHotelRoom(int roomNum, int hotelId)
+        //{
+        //    HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
 
-            HotelRoomDTO dto = new HotelRoomDTO()
-            {
-                HotelId = hotelRoom.HotelId,
-                RoomId = hotelRoom.RoomId,
-                RoomNumber = hotelRoom.RoomNumber,
-                DailyRate = hotelRoom.Rate,
-                PetFriendly = hotelRoom.PetFriendly
-            };
+        //    HotelRoomDTO dto = new HotelRoomDTO()
+        //    {
+        //        HotelId = hotelRoom.HotelId,
+        //        RoomId = hotelRoom.RoomId,
+        //        RoomNumber = hotelRoom.RoomNumber,
+        //        DailyRate = hotelRoom.Rate,
+        //        PetFriendly = hotelRoom.PetFriendly
+        //    };
 
-            return dto;
-        }
+        //    return dto;
+        //}
 
         /// <summary>
         /// Returns all rooms at a specified hotel
