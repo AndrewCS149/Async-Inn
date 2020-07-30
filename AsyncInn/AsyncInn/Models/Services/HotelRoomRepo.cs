@@ -90,29 +90,6 @@ namespace AsyncInn.Models.Services
             return dto;
         }
 
-        // TODO: delete
-        /// <summary>
-        /// Returns a specified hotel room
-        /// </summary>
-        /// <param name="roomNum">Unique identifier of a room</param>
-        /// <param name="hotelId">Unique identifier of a hotel</param>
-        /// <returns>Task of completion</returns>
-        //public async Task<HotelRoomDTO> GetHotelRoom(int roomNum, int hotelId)
-        //{
-        //    HotelRoom hotelRoom = await _context.HotelRoom.FindAsync(roomNum, hotelId);
-
-        //    HotelRoomDTO dto = new HotelRoomDTO()
-        //    {
-        //        HotelId = hotelRoom.HotelId,
-        //        RoomId = hotelRoom.RoomId,
-        //        RoomNumber = hotelRoom.RoomNumber,
-        //        DailyRate = hotelRoom.Rate,
-        //        PetFriendly = hotelRoom.PetFriendly
-        //    };
-
-        //    return dto;
-        //}
-
         /// <summary>
         /// Returns all rooms at a specified hotel
         /// </summary>
