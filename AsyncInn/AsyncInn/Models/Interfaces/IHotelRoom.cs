@@ -16,9 +16,6 @@ namespace AsyncInn.Models.Interfaces
         /// <returns>Task of completion</returns>
         Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom, int hotelId);
 
-        // TODO: delete param
-        //Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom);
-
         /// <summary>
         /// Returns all hotel rooms
         /// </summary>

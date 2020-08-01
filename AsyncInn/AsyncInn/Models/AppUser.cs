@@ -14,9 +14,7 @@ namespace AsyncInn.Models
 
     public static class AppRoles
     {
-        //public const string Manager = "Manager";
         public const string DistrictManager = "DistrictManager";
-
         public const string PropertyManager = "PropertyManager";
         public const string Agent = "Agent";
     }

@@ -33,6 +33,8 @@ namespace AsyncInn.Controllers
 
         // POST: api/Account/register
         [HttpPost]
+        // TODO: do i need this?
+        [Authorize(Policy = "TierOne")]
         [Route("register")]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
@@ -50,12 +52,9 @@ namespace AsyncInn.Controllers
 
             if (result.Succeeded)
             {
-                //if (user.Email == _config["ManagerSeed"])
                 if (user.Email == _config["AdminEmail"])
-
                     await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
 
-                // sign the user in if it was successful
                 await _signInManager.SignInAsync(user, false);
                 return Ok();
             }
@@ -90,7 +89,7 @@ namespace AsyncInn.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "AdministrativePrivileges")]
+        [Authorize(Policy = "TierOne")]
         [Route("assign/role")]
         public async Task AssignRoleToUser(AssignRoleDTO assignment)
         {

@@ -17,6 +17,7 @@ namespace AsyncInn.Models
         /// </summary>
         private static readonly List<IdentityRole> Roles = new List<IdentityRole>()
         {
+            // TODO: delete
             //new IdentityRole{Name = AppRoles.Manager, NormalizedName = AppRoles.Manager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
 
             new IdentityRole{Name = AppRoles.DistrictManager, NormalizedName = AppRoles.DistrictManager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
