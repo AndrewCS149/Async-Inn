@@ -10,11 +10,13 @@ using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using System.Runtime.InteropServices.WindowsRuntime;
 using AsyncInn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoomsController : ControllerBase
     {
         private AsyncInnDbContext _context;
@@ -29,6 +31,7 @@ namespace AsyncInn.Controllers
         // Gets all room types
         // GET: api/Rooms
         [HttpGet]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult<IEnumerable<RoomDTO>>> GetAllRooms()
         {
             return await _room.GetAllRooms();
@@ -36,6 +39,7 @@ namespace AsyncInn.Controllers
 
         // gets a specified room type
         // GET: api/Rooms/5
+        [Authorize(Policy = "TierThree")]
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
@@ -48,9 +52,8 @@ namespace AsyncInn.Controllers
         }
 
         // PUT: api/Rooms/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize(Policy = "TierTwo")]
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
             if (id != room.Id)
@@ -62,9 +65,8 @@ namespace AsyncInn.Controllers
         }
 
         // POST: api/Rooms
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize(Policy = "TierTwo")]
         public async Task<ActionResult<RoomDTO>> PostRoom(RoomDTO room)
         {
             await _room.Create(room);
@@ -74,6 +76,7 @@ namespace AsyncInn.Controllers
         // POST: {roomId}/Amenity/{amenityId}
         [HttpPost]
         [Route("{roomId}/Amenity/{amenityId}")]
+        [Authorize(Policy = "TierThree")]
         public async Task<IActionResult> AddAmenityToRoom(int roomId, int amenityId)
         {
             await _room.AddAmenityToRoom(roomId, amenityId);
@@ -83,6 +86,7 @@ namespace AsyncInn.Controllers
         // DELETE
         [HttpDelete]
         [Route("{roomId}/Amenity/{amenityId}")]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult> RemoveAmenityFromRoom(int roomId, int amenityId)
         {
             await _room.RemoveAmenityFromRoom(roomId, amenityId);
@@ -91,6 +95,7 @@ namespace AsyncInn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "TierTwo")]
         public async Task DeleteRoom(int id)
         {
             var room = await _context.Room.FindAsync(id);
