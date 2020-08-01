@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AsyncInn.Controllers
 {
@@ -32,14 +33,15 @@ namespace AsyncInn.Controllers
             _userManager = userManager;
         }
 
+        // TODO: Issue 1: the account that is registering another account gets a '403 forbidden' when the policy is set to a different policy, which is a good thing. BUT, it also get a '403' when the policy is set to the correct policy AND an additional policy is added.
+
+        // TODO: Issue 2: the account is able to successfully register another account when no policies are in place
+
         // POST: api/Account/register
         [HttpPost]
-        // TODO: do i need this?
-        //[Authorize(Policy = "TierOne")]
-        //[Authorize(Policy = "TierTwo")]
-        //[Authorize(Policy = "TierThree")]
+        [Authorize(Policy = "TierTwo")]
         [Route("register")]
-        public async Task<IActionResult> Register(RegisterDTO register)
+        public async Task<IActionResult> RegisterTierOne(RegisterDTO register)
         {
             // instantiate new user
             AppUser user = new AppUser()
@@ -50,30 +52,108 @@ namespace AsyncInn.Controllers
                 LastName = register.LastName
             };
 
-            // create the user
+            // get current user's role
+            var currentUser = User.FindFirstValue(ClaimTypes.Role);
+
             var result = await _userManager.CreateAsync(user, register.Password);
 
-            if (result.Succeeded)
+            // if current users role is a district manager
+            if (currentUser.ToLower() == "districtmanager")
             {
-                // TODO: Delete?
-                //if (user.Email == _config["AdminEmail"])
-                //    await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
+                if (result.Succeeded)
+                {
+                    if (register.Role.ToLower() == "districtmanager")
+                    {
+                        await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
+                    }
+                    else if (register.Role.ToLower() == "propertymanager")
+                    {
+                        await _userManager.AddToRoleAsync(user, AppRoles.PropertyManager);
+                    }
+                    else if (register.Role.ToLower() == "agent")
+                    {
+                        await _userManager.AddToRoleAsync(user, AppRoles.Agent);
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid Registration");
+                    }
 
-                if (register.Role.ToLower() == "districtmanager")
-                    await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
+                    await _signInManager.SignInAsync(user, false);
+                    return Ok();
+                }
+            }
+            // if current user's role is a property manager
+            else if (currentUser.ToLower() == "propertymanager")
+            {
+                if (result.Succeeded)
+                {
+                    if (register.Role.ToLower() == "agent")
+                    {
+                        await _userManager.AddToRoleAsync(user, AppRoles.Agent);
+                    }
+                    else
+                    {
+                        return BadRequest("Rights not granted");
+                    }
 
-                if (register.Role.ToLower() == "propertymanager")
-                    await _userManager.AddToRoleAsync(user, AppRoles.PropertyManager);
-
-                if (register.Role.ToLower() == "agent")
-                    await _userManager.AddToRoleAsync(user, AppRoles.Agent);
-
-                await _signInManager.SignInAsync(user, false);
-                return Ok();
+                    await _signInManager.SignInAsync(user, false);
+                    return Ok();
+                }
             }
 
             return BadRequest("Invalid Registration");
+
+            // create the user
+            //var result = await _userManager.CreateAsync(user, register.Password);
+
+            //if (result.Succeeded)
+            //{
+            //    if (register.Role.ToLower() == "districtmanager")
+            //        await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
+
+            //    if (register.Role.ToLower() == "propertymanager")
+            //        await _userManager.AddToRoleAsync(user, AppRoles.PropertyManager);
+
+            //    if (register.Role.ToLower() == "agent")
+            //        await _userManager.AddToRoleAsync(user, AppRoles.Agent);
+
+            //    await _signInManager.SignInAsync(user, false);
+            //    return Ok();
+            //}
+
+            //return BadRequest("Invalid Registration");
         }
+
+        // POST: api/Account/register
+        //[HttpPost]
+        //[Authorize(Policy = "TierTwo")]
+        //[Route("registerT2")]
+        //public async Task<IActionResult> RegisterTierTwo(RegisterDTO register)
+        //{
+        //    // instantiate new user
+        //    AppUser user = new AppUser()
+        //    {
+        //        Email = register.Email,
+        //        UserName = register.Email,
+        //        FirstName = register.FirstName,
+        //        LastName = register.LastName
+        //    };
+
+        //    // create the user
+        //    var result = await _userManager.CreateAsync(user, register.Password);
+
+        //    if (result.Succeeded)
+        //    {
+        //        if (register.Role.ToLower() == "agent")
+        //            await _userManager.AddToRoleAsync(user, AppRoles.Agent);
+
+        //        await _signInManager.SignInAsync(user, false);
+        //        return Ok();
+        //    }
+
+        //    return BadRequest("Invalid Registration");
+        //}
 
         [HttpPost]
         [Route("login")]

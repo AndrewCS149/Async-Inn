@@ -77,8 +77,8 @@ namespace AsyncInn
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("TierOne", policy => policy.RequireRole(AppRoles.DistrictManager));
-                options.AddPolicy("TierTwo", policy => policy.RequireRole(AppRoles.PropertyManager));
-                options.AddPolicy("TierThree", policy => policy.RequireRole(AppRoles.Agent));
+                options.AddPolicy("TierTwo", policy => policy.RequireRole(AppRoles.PropertyManager, AppRoles.DistrictManager));
+                options.AddPolicy("TierThree", policy => policy.RequireRole(AppRoles.Agent, AppRoles.PropertyManager, AppRoles.DistrictManager));
             });
 
             // register my dependency injection services
