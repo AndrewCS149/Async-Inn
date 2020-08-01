@@ -92,7 +92,6 @@ namespace AsyncInn.Models.Services
         public async Task Delete(int id)
         {
             var amenity = await _context.Amenities.FindAsync(id);
-
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }

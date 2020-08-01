@@ -17,10 +17,12 @@ namespace AsyncInn.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
+        private AsyncInnDbContext _context;
         private readonly IRoom _room;
 
-        public RoomsController(IRoom room)
+        public RoomsController(IRoom room, AsyncInnDbContext context)
         {
+            _context = context;
             _room = room;
         }
 
@@ -89,10 +91,11 @@ namespace AsyncInn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Room>> DeleteRoom(int id)
+        public async Task DeleteRoom(int id)
         {
-            await _room.Delete(id);
-            return NoContent();
+            var room = await _context.Room.FindAsync(id);
+            _context.Entry(room).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
         }
     }
 }
