@@ -42,7 +42,7 @@ namespace AsyncInn.Controllers
                 Email = register.Email,
                 UserName = register.Email,
                 FirstName = register.FirstName,
-                LastName = register.LastName 
+                LastName = register.LastName
             };
 
             // create the user
@@ -50,9 +50,10 @@ namespace AsyncInn.Controllers
 
             if (result.Succeeded)
             {
+                //if (user.Email == _config["ManagerSeed"])
+                if (user.Email == _config["AdminEmail"])
 
-                if (user.Email == _config["ManagerSeed"])
-                    await _userManager.AddToRoleAsync(user, AppRoles.Manager);
+                    await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
 
                 // sign the user in if it was successful
                 await _signInManager.SignInAsync(user, false);
@@ -83,7 +84,6 @@ namespace AsyncInn.Controllers
                     jwt = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo
                 });
-
             }
 
             return BadRequest("Username or password incorrect");
@@ -97,12 +97,12 @@ namespace AsyncInn.Controllers
             var user = await _userManager.FindByEmailAsync(assignment.Email);
             await _userManager.AddToRoleAsync(user, assignment.Role);
         }
-        
+
         private JwtSecurityToken CreateToken(AppUser user, List<string> role)
         {
             // Token requires pieces of info called "claims"
-            // Person/User is the principle 
-            // a principle can have many forms of identity 
+            // Person/User is the principle
+            // a principle can have many forms of identity
             // an identity contains many claims
             // a claim is a statement about the user "I have brown hair"
 

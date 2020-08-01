@@ -21,6 +21,7 @@ namespace AsyncInn.Models.Services
             _signInManager = signInManager;
         }
 
+        // TODO: Delete?
         //public async bool ValidateUser(List<Claim> claims)
         //{
         //    // get the name claim

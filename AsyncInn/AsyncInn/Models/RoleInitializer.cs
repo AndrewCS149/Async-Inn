@@ -17,7 +17,7 @@ namespace AsyncInn.Models
         /// </summary>
         private static readonly List<IdentityRole> Roles = new List<IdentityRole>()
         {
-            new IdentityRole{Name = AppRoles.Manager, NormalizedName = AppRoles.Manager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+            //new IdentityRole{Name = AppRoles.Manager, NormalizedName = AppRoles.Manager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
 
             new IdentityRole{Name = AppRoles.DistrictManager, NormalizedName = AppRoles.DistrictManager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
 
@@ -75,7 +75,7 @@ namespace AsyncInn.Models
                 IdentityResult result = userManager.CreateAsync(user, _config["AdminPassword"]).Result;
 
                 if (result.Succeeded)
-                    userManager.AddToRoleAsync(user, AppRoles.Manager).Wait();
+                    userManager.AddToRoleAsync(user, AppRoles.DistrictManager).Wait();
             }
         }
     }

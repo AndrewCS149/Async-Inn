@@ -31,24 +31,22 @@ namespace AsyncInn
         {
             Configuration = configuration;
         }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             // enable use controllers within the MVC convention
-            services.AddControllers(options => {
+            services.AddControllers(options =>
+            {
                 options.Filters.Add(new AuthorizeFilter());
             }).AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-
             // register with the app, that the database exists and what options to use for it
             services.AddDbContext<AsyncInnDbContext>(options =>
             {
-                // install package Microsoft.EntityFramewowrkCore.SqlServer
-                // connection string = location where something lives. In our case, it's where our DB lives
-                // Connection string contains the location, username, pw of your sql server... with our sql db directly.
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
@@ -78,8 +76,8 @@ namespace AsyncInn
             // add policies
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdministrativePrivileges", policy => policy.RequireRole(AppRoles.Manager));
-                //options.AddPolicy("BranchManagers", policy => policy.RequireRole(AppRoles.Manager)); 
+                //options.AddPolicy("AdministrativePrivileges", policy => policy.RequireRole(AppRoles.Manager));
+                options.AddPolicy("AdministrativePrivileges", policy => policy.RequireRole(AppRoles.DistrictManager));
             });
 
             // register my dependency injection services
@@ -88,8 +86,6 @@ namespace AsyncInn
             services.AddTransient<IAmenities, AmenitiesRepo>();
             services.AddTransient<IHotelRoom, HotelRoomRepo>();
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
