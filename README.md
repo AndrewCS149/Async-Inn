@@ -78,7 +78,6 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 **HotelRoomController**
 - GetAllHotelRooms: `api/Hotels/Rooms`
-- GetHotelRoomDetails: `api/Hotels/{hotelId}/Rooms{roomNumber}/Details`
 - GetAllRoomsAtHotel: `api/Hotels/{hotelId}/Rooms`
 - GetHotelRoom: `api/Hotels/{hotelId}/Rooms/{roomNumber}`
 - PutHotelRoom: `api/Hotels/{hotelId}/Rooms/roomNumber}`
@@ -124,6 +123,7 @@ creating passwords, user authentication and more.
 
 ### Change Log
 
+- 1.18 All routes working as intended - 31 Jul 2020
 - 1.17 Add AppUser controller and add routes - 28 Jul 2020
 - 1.16 Add UserApp class - 28 Jul 2020
 - 1.15 Modify all hotel methods into DTO - 27 Jul 2020
