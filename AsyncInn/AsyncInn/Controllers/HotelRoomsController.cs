@@ -14,8 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace AsyncInn.Controllers
 {
     [Route("api/Hotels")]
-    [Authorize]
     [ApiController]
+    [Authorize]
     public class HotelRoomsController : ControllerBase
     {
         private readonly IHotelRoom _hotelRoom;
@@ -29,6 +29,7 @@ namespace AsyncInn.Controllers
         // GET: api/Hotels/Rooms
         [HttpGet]
         [Route("Rooms")]
+        [Authorize(Policy = "TierOne")]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetAllHotelRooms()
         {
             return await _hotelRoom.GetAllHotelRooms();
@@ -38,6 +39,7 @@ namespace AsyncInn.Controllers
         // GET: api/Hotels/1/Rooms/2
         [HttpGet]
         [Route("{hotelId}/Rooms/{roomNum}")]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomNum)
         {
             return await _hotelRoom.GetHotelRoom(hotelId, roomNum);
@@ -45,19 +47,18 @@ namespace AsyncInn.Controllers
 
         // gets all the rooms at a specified hotel
         // GET: api/Hotels/1/Rooms
-        [AllowAnonymous]
         [HttpGet]
         [Route("{hotelId}/Rooms")]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetAllRoomsAtHotel(int hotelId)
         {
             return await _hotelRoom.GetAllRoomsAtHotel(hotelId);
         }
 
         // PUT: api/HotelRooms/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         [Route("{hotelId}/Rooms/{roomNumber}")]
+        [Authorize(Policy = "TierThree")]
         public async Task<IActionResult> PutHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom)
         {
             if (hotelId != hotelRoom.HotelId || roomNumber != hotelRoom.RoomNumber)
@@ -68,10 +69,9 @@ namespace AsyncInn.Controllers
         }
 
         // POST: api/Hotels/1
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("{hotelId}")]
+        [Authorize(Policy = "TierTwo")]
         public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(HotelRoomDTO hotelRoom, int hotelId)
         {
             if (hotelId != hotelRoom.HotelId)
@@ -84,6 +84,7 @@ namespace AsyncInn.Controllers
         // DELETE: api/Hotels/5
         [HttpDelete]
         [Route("{hotelId}/Rooms/{roomNum}")]
+        [Authorize(Policy = "TierTwo")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int roomNum, int hotelId)
         {
             await _hotelRoom.Delete(roomNum, hotelId);
