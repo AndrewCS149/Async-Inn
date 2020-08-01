@@ -19,7 +19,11 @@ namespace AsyncInn.Models
         {
             new IdentityRole{Name = AppRoles.Manager, NormalizedName = AppRoles.Manager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
 
-             new IdentityRole{Name = AppRoles.Customer, NormalizedName = AppRoles.Customer.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+            new IdentityRole{Name = AppRoles.DistrictManager, NormalizedName = AppRoles.DistrictManager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+
+            new IdentityRole{Name = AppRoles.PropertyManager, NormalizedName = AppRoles.PropertyManager.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() },
+
+            new IdentityRole{Name = AppRoles.Agent, NormalizedName = AppRoles.Agent.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() }
         };
 
         /// <summary>
