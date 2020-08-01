@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -34,7 +35,9 @@ namespace AsyncInn.Controllers
         // POST: api/Account/register
         [HttpPost]
         // TODO: do i need this?
-        [Authorize(Policy = "TierOne")]
+        //[Authorize(Policy = "TierOne")]
+        //[Authorize(Policy = "TierTwo")]
+        //[Authorize(Policy = "TierThree")]
         [Route("register")]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
@@ -52,8 +55,18 @@ namespace AsyncInn.Controllers
 
             if (result.Succeeded)
             {
-                if (user.Email == _config["AdminEmail"])
+                // TODO: Delete?
+                //if (user.Email == _config["AdminEmail"])
+                //    await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
+
+                if (register.Role.ToLower() == "districtmanager")
                     await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
+
+                if (register.Role.ToLower() == "propertymanager")
+                    await _userManager.AddToRoleAsync(user, AppRoles.PropertyManager);
+
+                if (register.Role.ToLower() == "agent")
+                    await _userManager.AddToRoleAsync(user, AppRoles.Agent);
 
                 await _signInManager.SignInAsync(user, false);
                 return Ok();
