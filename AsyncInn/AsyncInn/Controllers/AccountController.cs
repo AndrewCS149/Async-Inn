@@ -33,10 +33,6 @@ namespace AsyncInn.Controllers
             _userManager = userManager;
         }
 
-        // TODO: Issue 1: the account that is registering another account gets a '403 forbidden' when the policy is set to a different policy, which is a good thing. BUT, it also get a '403' when the policy is set to the correct policy AND an additional policy is added.
-
-        // TODO: Issue 2: the account is able to successfully register another account when no policies are in place
-
         // POST: api/Account/register
         [HttpPost]
         [Authorize(Policy = "TierTwo")]
@@ -103,57 +99,7 @@ namespace AsyncInn.Controllers
             }
 
             return BadRequest("Invalid Registration");
-
-            // create the user
-            //var result = await _userManager.CreateAsync(user, register.Password);
-
-            //if (result.Succeeded)
-            //{
-            //    if (register.Role.ToLower() == "districtmanager")
-            //        await _userManager.AddToRoleAsync(user, AppRoles.DistrictManager);
-
-            //    if (register.Role.ToLower() == "propertymanager")
-            //        await _userManager.AddToRoleAsync(user, AppRoles.PropertyManager);
-
-            //    if (register.Role.ToLower() == "agent")
-            //        await _userManager.AddToRoleAsync(user, AppRoles.Agent);
-
-            //    await _signInManager.SignInAsync(user, false);
-            //    return Ok();
-            //}
-
-            //return BadRequest("Invalid Registration");
         }
-
-        // POST: api/Account/register
-        //[HttpPost]
-        //[Authorize(Policy = "TierTwo")]
-        //[Route("registerT2")]
-        //public async Task<IActionResult> RegisterTierTwo(RegisterDTO register)
-        //{
-        //    // instantiate new user
-        //    AppUser user = new AppUser()
-        //    {
-        //        Email = register.Email,
-        //        UserName = register.Email,
-        //        FirstName = register.FirstName,
-        //        LastName = register.LastName
-        //    };
-
-        //    // create the user
-        //    var result = await _userManager.CreateAsync(user, register.Password);
-
-        //    if (result.Succeeded)
-        //    {
-        //        if (register.Role.ToLower() == "agent")
-        //            await _userManager.AddToRoleAsync(user, AppRoles.Agent);
-
-        //        await _signInManager.SignInAsync(user, false);
-        //        return Ok();
-        //    }
-
-        //    return BadRequest("Invalid Registration");
-        //}
 
         [HttpPost]
         [Route("login")]

@@ -124,6 +124,8 @@ creating passwords, user authentication and more.
 
 ### Change Log
 
+- 1.20 'District Manager', 'Property Manager' & 'Agent' - 1 Aug 2020
+- 1.19 User authentication and authorization - 1 Aug 2020
 - 1.18 All routes working as intended - 31 Jul 2020
 - 1.17 Add AppUser controller and add routes - 28 Jul 2020
 - 1.16 Add UserApp class - 28 Jul 2020
