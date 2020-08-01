@@ -16,7 +16,8 @@ namespace AsyncInn.Models
     {
         public const string Manager = "Manager";
         public const string Customer = "Customer";
-        //public const string Teacher = "Teacher";
-        //public const string 
+        public const string DistrictManager = "DistrictManager";
+        public const string PropertyManager = "PropertyManager";
+        public const string Agent = "Agent";
     }
 }

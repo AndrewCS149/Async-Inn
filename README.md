@@ -1,4 +1,4 @@
-# Async-Inn
+# Async Inn
 
 *Author: Andrew Smith*
 
@@ -8,6 +8,7 @@
 - Lab-14
 - Lab-15
 - Lab-17
+- Lab-18 
 
 ---
 
