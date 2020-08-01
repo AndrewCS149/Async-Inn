@@ -13,14 +13,16 @@ namespace AsyncInn.Models.Services
     public class HotelRepo : IHotel
     {
         private AsyncInnDbContext _context;
+        private IHotelRoom _hotelRoom;
 
         /// <summary>
         /// Constructor for HotelRepo
         /// </summary>
         /// <param name="context">Database context</param>
         /// <param name="hotel">IHotel reference</param>
-        public HotelRepo(AsyncInnDbContext context)
+        public HotelRepo(AsyncInnDbContext context, IHotelRoom hotelRoom)
         {
+            _hotelRoom = hotelRoom;
             _context = context;
         }
 
@@ -72,6 +74,7 @@ namespace AsyncInn.Models.Services
         public async Task<HotelDTO> GetHotel(int id)
         {
             Hotel hotel = await _context.Hotels.FindAsync(id);
+            var hotelRoomDTO = await _hotelRoom.GetAllRoomsAtHotel(id);
 
             HotelDTO dto = new HotelDTO()
             {
@@ -80,7 +83,8 @@ namespace AsyncInn.Models.Services
                 StreetAddress = hotel.StreetAddress,
                 City = hotel.City,
                 State = hotel.State,
-                Phone = hotel.Phone
+                Phone = hotel.Phone,
+                HotelRoom = hotelRoomDTO
             };
 
             return dto;
