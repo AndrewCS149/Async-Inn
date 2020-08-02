@@ -9,15 +9,15 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AsyncInnTests
 {
-    public class AccountControllerTests : DBTestBase
+    public class HotelTests : DBTestBase
     {
         private IHotel BuildRepository()
         {
-            return new HotelRepo(_db);
+            return new HotelRepo(_db, _hotelRoom);
         }
 
         [Fact]
-        public async Task CanSaveAndGet()
+        public async Task CanCreateAndReturnDTO()
         {
             // arrange
             var hotel = new Hotel
@@ -46,7 +46,6 @@ namespace AsyncInnTests
 
             // assert
             Assert.NotNull(savedHotel);
-            Assert.NotEqual(0, hotel.Id);
             Assert.Equal(savedHotel.Id, hotel.Id);
             Assert.Equal(hotel.Name, savedHotel.Name);
         }
