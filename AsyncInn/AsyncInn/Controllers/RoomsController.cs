@@ -39,8 +39,8 @@ namespace AsyncInn.Controllers
 
         // gets a specified room type
         // GET: api/Rooms/5
-        [Authorize(Policy = "TierThree")]
         [HttpGet("{id}")]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             var room = await _room.GetRoom(id);
