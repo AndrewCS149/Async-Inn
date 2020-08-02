@@ -68,6 +68,24 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ---
 
+### Authorization Levels
+
+#### *District Managers*
+
+District managers have full control over the database with the abilty of adding and removing entire hotels or amenities
+and everything in between. District managers can also register new district managers, property managers and agents.
+
+#### *Property Managers*
+
+Property managers have the ability to add, update, and get hotel rooms and amenities. They also are able to register 
+new agents.
+
+#### *Agents*
+
+Agents can only read and update a hotel room, and add and delete amenities from rooms.
+
+---
+
 ### Routes 
 
 **AmenitiesController**
@@ -124,6 +142,7 @@ creating passwords, user authentication and more.
 
 ### Change Log
 
+- 1.21 Authorizations set to all routes - 1 Aug 2020
 - 1.20 'District Manager', 'Property Manager' & 'Agent' - 1 Aug 2020
 - 1.19 User authentication and authorization - 1 Aug 2020
 - 1.18 All routes working as intended - 31 Jul 2020
