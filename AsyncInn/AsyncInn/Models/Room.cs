@@ -10,7 +10,7 @@ namespace AsyncInn.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Layout { get; set; }
+        public Layout Layout { get; set; }
 
         // nav props
         public ICollection<HotelRoom> HotelRooms { get; set; }

@@ -9,11 +9,13 @@ using AsyncInn.Data;
 using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using AsyncInn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AmenitiesController : ControllerBase
     {
         private readonly IAmenities _amenity;
@@ -26,6 +28,7 @@ namespace AsyncInn.Controllers
         // GET: api/Amenities/4
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
         {
             var amenities = await _amenity.GetAmenity(id);
@@ -38,17 +41,16 @@ namespace AsyncInn.Controllers
 
         // GET: api/Amenities
         [HttpGet]
+        [Authorize(Policy = "TierThree")]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
         {
             return await _amenity.GetAllAmenities();
-        }      
+        }
 
-        // TODO: How do I run this in postman?
         // PUT: api/Amenities/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenities(int id, Amenities amenities)
+        [Authorize(Policy = "TierTwo")]
+        public async Task<IActionResult> PutAmenity(int id, Amenities amenities)
         {
             if (id != amenities.Id)
                 return BadRequest();
@@ -58,6 +60,7 @@ namespace AsyncInn.Controllers
         }
 
         // POST: api/Amenities
+        [Authorize(Policy = "TierTwo")]
         [HttpPost]
         public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
         {
@@ -65,10 +68,10 @@ namespace AsyncInn.Controllers
             return CreatedAtAction("GetAmenities", new { id = amenity.Id }, amenity);
         }
 
-        // TODO: Is this working?
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
+        [Authorize(Policy = "TierTwo")]
+        public async Task<ActionResult<Amenities>> DeleteAmenity(int id)
         {
             await _amenity.Delete(id);
             return NoContent();

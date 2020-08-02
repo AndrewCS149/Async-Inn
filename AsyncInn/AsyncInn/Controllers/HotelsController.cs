@@ -10,16 +10,17 @@ using AsyncInn.Models;
 using AsyncInn.Models.Interfaces;
 using AsyncInn.Models.DTOs;
 using SQLitePCL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AsyncInn.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class HotelsController : ControllerBase
     {
         private readonly IHotel _hotel;
 
-        // our constructor is bringing in a reference to our db
         public HotelsController(IHotel hotel)
         {
             _hotel = hotel;
@@ -27,6 +28,7 @@ namespace AsyncInn.Controllers
 
         // GET: api/Hotels
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<HotelDTO>>> GetAllHotels()
         {
             return await _hotel.GetAllHotels();
@@ -34,6 +36,7 @@ namespace AsyncInn.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             var hotel = await _hotel.GetHotel(id);
@@ -48,6 +51,7 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize(Policy = "TierOne")]
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
             if (id != hotel.Id)
@@ -62,6 +66,7 @@ namespace AsyncInn.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize(Policy = "TierOne")]
         public async Task<ActionResult<HotelDTO>> PostHotel(HotelDTO hotel)
         {
             await _hotel.Create(hotel);
@@ -70,6 +75,7 @@ namespace AsyncInn.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "TierOne")]
         public async Task<ActionResult<Hotel>> DeleteHotel(int id)
         {
             await _hotel.Delete(id);

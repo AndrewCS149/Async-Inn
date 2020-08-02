@@ -15,6 +15,6 @@ namespace AsyncInn.Models.DTOs
         public string Phone { get; set; }
 
         // Navigation properties
-        public ICollection<HotelRoom> HotelRoom { get; set; }
+        public List<HotelRoomDTO> HotelRoom { get; set; }
     }
 }

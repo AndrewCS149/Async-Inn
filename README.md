@@ -1,4 +1,4 @@
-# Async-Inn
+# Async Inn
 
 *Author: Andrew Smith*
 
@@ -8,6 +8,7 @@
 - Lab-14
 - Lab-15
 - Lab-17
+- Lab-18 
 
 ---
 
@@ -67,6 +68,24 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 ---
 
+### Authorization Levels
+
+#### *District Managers*
+
+District managers have full control over the database with the abilty of adding and removing entire hotels or amenities
+and everything in between. District managers can also register new district managers, property managers and agents.
+
+#### *Property Managers*
+
+Property managers have the ability to add, update, and get hotel rooms and amenities. They also are able to register 
+new agents.
+
+#### *Agents*
+
+Agents can only read and update a hotel room, and add and delete amenities from rooms.
+
+---
+
 ### Routes 
 
 **AmenitiesController**
@@ -78,7 +97,6 @@ This ERD was taken from the 401 .NET course [repository](https://github.com/code
 
 **HotelRoomController**
 - GetAllHotelRooms: `api/Hotels/Rooms`
-- GetHotelRoomDetails: `api/Hotels/{hotelId}/Rooms{roomNumber}/Details`
 - GetAllRoomsAtHotel: `api/Hotels/{hotelId}/Rooms`
 - GetHotelRoom: `api/Hotels/{hotelId}/Rooms/{roomNumber}`
 - PutHotelRoom: `api/Hotels/{hotelId}/Rooms/roomNumber}`
@@ -124,6 +142,10 @@ creating passwords, user authentication and more.
 
 ### Change Log
 
+- 1.21 Authorizations set to all routes - 1 Aug 2020
+- 1.20 'District Manager', 'Property Manager' & 'Agent' - 1 Aug 2020
+- 1.19 User authentication and authorization - 1 Aug 2020
+- 1.18 All routes working as intended - 31 Jul 2020
 - 1.17 Add AppUser controller and add routes - 28 Jul 2020
 - 1.16 Add UserApp class - 28 Jul 2020
 - 1.15 Modify all hotel methods into DTO - 27 Jul 2020

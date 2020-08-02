@@ -23,14 +23,6 @@ namespace AsyncInn.Models.Interfaces
         Task<List<HotelRoomDTO>> GetAllHotelRooms();
 
         /// <summary>
-        /// Retrieves a specified hotel room's details
-        /// </summary>
-        /// <param name="hotelId">Unique identifier of a hotel</param>
-        /// <param name="roomNum">Unique identifier of a room</param>
-        /// <returns>Task of completion</returns>
-        Task<HotelRoomDTO> GetHotelRoomDetails(int hotelId, int roomNum);
-
-        /// <summary>
         /// Returns all rooms at a specified hotel
         /// </summary>
         /// <param name="hotelId">Unique identifier of a hotel</param>
@@ -50,7 +42,8 @@ namespace AsyncInn.Models.Interfaces
         /// </summary>
         /// <param name="hotelRoom">The hotel room to update</param>
         /// <returns>Task of completion</returns>
-        Task<HotelRoom> Update(HotelRoom hotelRoom);
+        //Task<HotelRoom> Update(HotelRoom hotelRoom);
+        Task<HotelRoomDTO> Update(HotelRoom hotelRoom);
 
         /// <summary>
         /// Adds a room to a hotel

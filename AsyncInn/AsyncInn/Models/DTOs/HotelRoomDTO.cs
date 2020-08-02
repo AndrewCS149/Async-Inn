@@ -10,11 +10,10 @@ namespace AsyncInn.Models.DTOs
         public int HotelId { get; set; }
         public int RoomId { get; set; }
         public int RoomNumber { get; set; }
-        public decimal DailyRate { get; set; }
+        public decimal Rate { get; set; }
         public bool PetFriendly { get; set; }
 
         // Navigation properties
-        public Room Room { get; set; }
-        //public ICollection<RoomAmenities> RoomAmenities { get; set; }
+        public RoomDTO Room { get; set; }
     }
 }
